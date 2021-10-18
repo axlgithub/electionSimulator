@@ -6,26 +6,24 @@ import java.util.UUID;
 
 public class MasterHippopotamus {
     private static MasterHippopotamus single_instance = null;
-    private UUID id;
-    private String specie;
     public Case house;
+    private final UUID id;
+    private final String species;
 
-    private MasterHippopotamus()
-    {
+    private MasterHippopotamus() {
         id = UUID.randomUUID();
-        specie = "Hippopotamus";
-    }
-
-    public UUID getId() {
-        return id;
+        species = "Hippopotamus";
     }
 
     // Static method to create instance of MasterLion class
-    public static MasterHippopotamus getInstance()
-    {
+    public static MasterHippopotamus getInstance() {
         if (single_instance == null)
             single_instance = new MasterHippopotamus();
 
         return single_instance;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

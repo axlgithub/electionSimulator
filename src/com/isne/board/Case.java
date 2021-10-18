@@ -2,7 +2,7 @@ package com.isne.board;
 
 import java.util.UUID;
 
-public class Case extends Board {
+public class Case {
     private UUID id;
     private int posX;
     private int posY;

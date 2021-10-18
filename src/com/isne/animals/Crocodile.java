@@ -1,4 +1,4 @@
 package com.isne.animals;
 
-public class Crocodile extends Carnivorus{
+public class Crocodile extends Carnivorus {
 }

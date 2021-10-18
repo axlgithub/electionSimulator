@@ -1,4 +1,4 @@
 package com.isne.animals;
 
-public class Giraffe extends Herbivorus{
+public class Giraffe extends Herbivorus {
 }

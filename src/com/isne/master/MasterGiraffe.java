@@ -6,26 +6,24 @@ import java.util.UUID;
 
 public class MasterGiraffe {
     private static MasterGiraffe single_instance = null;
-    private UUID id;
-    private String specie;
     public Case house;
+    private final UUID id;
+    private final String species;
 
-    private MasterGiraffe()
-    {
+    private MasterGiraffe() {
         id = UUID.randomUUID();
-        specie = "Giraffe";
-    }
-
-    public UUID getId() {
-        return id;
+        species = "Giraffe";
     }
 
     // Static method to create instance of MasterLion class
-    public static MasterGiraffe getInstance()
-    {
+    public static MasterGiraffe getInstance() {
         if (single_instance == null)
             single_instance = new MasterGiraffe();
 
         return single_instance;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
