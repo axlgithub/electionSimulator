@@ -5,7 +5,7 @@ import com.isne.board.Case;
 import java.util.UUID;
 
 public class MasterLion {
-    private static MasterHippopotamus single_instance = null;
+    private static MasterLion single_instance = null;
     private UUID id;
     private String specie;
     public Case house;
@@ -21,10 +21,10 @@ public class MasterLion {
     }
 
     // Static method to create instance of MasterLion class
-    public static MasterHippopotamus getInstance()
+    public static MasterLion getInstance()
     {
         if (single_instance == null)
-            single_instance = new MasterHippopotamus();
+            single_instance = new MasterLion();
 
         return single_instance;
     }
