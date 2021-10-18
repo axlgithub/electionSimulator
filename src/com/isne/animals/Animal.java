@@ -1,5 +1,9 @@
 package com.isne.animals;
 
+import com.isne.board.Board;
+import com.isne.board.Case;
+import com.isne.board.Plant;
+
 import java.util.UUID;
 
 public abstract class Animal {
@@ -13,6 +17,30 @@ public abstract class Animal {
     private String species;
 
     public abstract void move();
+
+    public Case findClosest(Board board, Plant plant){
+        int maPositionX = this.position[0];
+        int maPositionY = this.position[1];
+        int distanceMin = board.sizeX + board.sizeY ;
+        int closestPlantX;
+        int closestPlantY;
+        Case caseMin = new Case();
+        for (int x=0; x<=board.sizeX;x++){
+            for (int y=0; y<=board.sizeY;y++){
+                if ( (maPositionX - x) + (maPositionY - y) < distanceMin) {
+                    if (board[x][y].type() == plant) {
+                        distanceMin=(maPositionX - x) + (maPositionY - y) ;
+                    }
+                }
+            }
+        }
+        // Fetch la case correspondant aux coordonnées minimales et la retourner
+        return caseMin;
+    }
+
+    public findClosest(Board board, Animal animal){
+
+    };
 
     /* Getters and setters   */
 
