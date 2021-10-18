@@ -1,4 +1,11 @@
 package com.isne.board;
 
-public class Case extends Board{
+import java.util.UUID;
+
+public class Case extends Board {
+    private UUID id;
+    private int posX;
+    private int posY;
+    private String type;
+    private boolean isBusy;
 }
