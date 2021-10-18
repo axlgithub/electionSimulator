@@ -1,12 +1,14 @@
 package com.isne.animals;
 
+import java.util.UUID;
+
 public abstract class Animal {
     private int life;
     private int strength;
     private int hunger;
     private int speedOnGround;
     private int speedOnWatter;
-    private int id;
+    private UUID id;
     private boolean canSwim;
     private String species;
 
@@ -46,11 +48,11 @@ public abstract class Animal {
         this.speedOnWatter = speedOnWatter;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

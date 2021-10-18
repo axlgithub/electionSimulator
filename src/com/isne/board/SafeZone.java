@@ -1,5 +1,10 @@
 package com.isne.board;
 
-public class SafeZone {
+import java.util.UUID;
 
+public class SafeZone extends Board {
+    private UUID id;
+    private int height;
+    private int width;
+    private String owner;
 }
