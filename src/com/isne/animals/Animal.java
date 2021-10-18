@@ -8,7 +8,7 @@ public abstract class Animal {
     private int speedOnWatter;
     private int id;
     private boolean canSwim;
-    private String specie;
+    private String species;
 
     public abstract void move();
 
@@ -62,12 +62,12 @@ public abstract class Animal {
         this.canSwim = canSwim;
     }
 
-    public String getSpecie() {
-        return specie;
+    public String getSpecies() {
+        return species;
     }
 
-    public void setSpecie(String specie) {
-        this.specie = specie;
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
     public int getLife() {
