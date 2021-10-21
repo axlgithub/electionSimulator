@@ -4,7 +4,7 @@ import com.isne.board.Board;
 
 import static java.lang.Boolean.TRUE;
 
-public class Crocodile extends Carnivorus {
+public class Crocodile extends Carnivorous {
     private int speedOnWatter;
 
     public Crocodile(){
