@@ -15,32 +15,36 @@ public abstract class Animal {
     private UUID id;
     private boolean canSwim;
     private String species;
+    private int positionX;
+    private int positionY;
+
 
     public abstract void move();
 
+    public double distance(int abscissa1, int ordinate1, int abscissa2, int ordinate2){
+        return (Math.sqrt( Math.pow ( (abscissa1-abscissa2) , 2 ) + Math.pow ( (ordinate1-ordinate2) , 2 ) ));
+    }
+
     public Case findClosest(Board board, Plant plant){
-        int maPositionX = this.position[0];
-        int maPositionY = this.position[1];
-        int distanceMin = board.sizeX + board.sizeY ;
-        int closestPlantX;
-        int closestPlantY;
+        int maPositionX = this.getPositionX();
+        int maPositionY = this.getPositionY();
+        double distanceMin = board.sizeX + board.sizeY ;
+        int closestPlantX = board.sizeX;
+        int closestPlantY = board.sizeY;
         Case caseMin = new Case();
-        for (int x=0; x<=board.sizeX;x++){
-            for (int y=0; y<=board.sizeY;y++){
-                if ( (maPositionX - x) + (maPositionY - y) < distanceMin) {
-                    if (board[x][y].type() == plant) {
+        for (int x=0; x<board.sizeX;x++){
+            for (int y=0; y<board.sizeY;y++){
+                if ( distance(maPositionX,maPositionY,x,y) < distanceMin) {
+                    if (board.getCaseAt(x,y).getType() == "plant") {
                         distanceMin=(maPositionX - x) + (maPositionY - y) ;
+                        closestPlantX = x;
+                        closestPlantY = y;
                     }
                 }
             }
         }
-        // Fetch la case correspondant aux coordonnées minimales et la retourner
-        return caseMin;
+        return board.getCaseAt(closestPlantX,closestPlantY);
     }
-
-    public findClosest(Board board, Animal animal){
-
-    };
 
     /* Getters and setters   */
 
@@ -107,4 +111,22 @@ public abstract class Animal {
     public void setLife(int life) {
         this.life = life;
     }
+
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
+    }
+
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionY(int positionY) {
+        this.positionY = positionY;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
 }
+
+
