@@ -15,8 +15,6 @@ public class Crocodile extends Carnivorous {
         this.setSpeedOnGround(3);
         this.setSpeedOnWatter(3);
         this.setSpecies("Crocodile");
-        this.setPositionX();
-        this.setPositionY();
     }
 
     public int getSpeedOnWatter() {

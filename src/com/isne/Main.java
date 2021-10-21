@@ -10,6 +10,7 @@ import com.isne.master.MasterHippopotamus;
 public class Main {
 
     public static void main(String[] args) {
+        // Tests
         Carnivorous John = new Carnivorous();
         John.setHunger(2);
         System.out.println(John.getHunger());
@@ -21,14 +22,14 @@ public class Main {
         System.out.println(pipou2);
 
 
+        // Game generation
         Board newBoard = new Board();
-
+        // See what is inside
         for (Case[] i:newBoard.grid){
             for (Case caseElement: i){
                 System.out.println(caseElement.getId());
             }
         }
 
-        System.out.println("test");
     }
     }
