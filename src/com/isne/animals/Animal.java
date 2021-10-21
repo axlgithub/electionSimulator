@@ -11,7 +11,6 @@ public abstract class Animal {
     private int strength;
     private int hunger;
     private int speedOnGround;
-    private int speedOnWatter;
     private UUID id;
     private boolean canSwim;
     private String species;
@@ -25,7 +24,7 @@ public abstract class Animal {
         return (Math.sqrt( Math.pow ( (abscissa1-abscissa2) , 2 ) + Math.pow ( (ordinate1-ordinate2) , 2 ) ));
     }
 
-    public Case findClosest(Board board, Plant plant){
+    public Case findClosest(Board board, String plant){
         int maPositionX = this.getPositionX();
         int maPositionY = this.getPositionY();
         double distanceMin = board.sizeX + board.sizeY ;
@@ -35,7 +34,7 @@ public abstract class Animal {
         for (int x=0; x<board.sizeX;x++){
             for (int y=0; y<board.sizeY;y++){
                 if ( distance(maPositionX,maPositionY,x,y) < distanceMin) {
-                    if (board.getCaseAt(x,y).getType() == "plant") {
+                    if (board.getCaseAt(x,y).getType() == plant) {
                         distanceMin=(maPositionX - x) + (maPositionY - y) ;
                         closestPlantX = x;
                         closestPlantY = y;
@@ -70,14 +69,6 @@ public abstract class Animal {
 
     public void setSpeedOnGround(int speedOnGround) {
         this.speedOnGround = speedOnGround;
-    }
-
-    public int getSpeedOnWatter() {
-        return speedOnWatter;
-    }
-
-    public void setSpeedOnWatter(int speedOnWatter) {
-        this.speedOnWatter = speedOnWatter;
     }
 
     public UUID getId() {
