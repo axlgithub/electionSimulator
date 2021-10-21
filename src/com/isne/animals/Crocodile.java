@@ -1,5 +1,7 @@
 package com.isne.animals;
 
+import com.isne.board.Board;
+
 import static java.lang.Boolean.TRUE;
 
 public class Crocodile extends Carnivorus {
@@ -19,6 +21,10 @@ public class Crocodile extends Carnivorus {
 
     public int getSpeedOnWatter() {
         return speedOnWatter;
+    }
+
+    public boolean condition(Board board, int x, int y){
+        return ((board.getCaseAt(x,y).content != null) && ( board.getCaseAt(x,y).content.getSpecies() == "Giraffe" || board.getCaseAt(x,y).content.getSpecies() == "Hippopotamus" ));
     }
 
     public void setSpeedOnWatter(int speedOnWatter) {
