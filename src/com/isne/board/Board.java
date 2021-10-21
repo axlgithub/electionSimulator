@@ -2,6 +2,8 @@ package com.isne.board;
 
 import com.isne.animals.Animal;
 
+import static com.isne.Main.LIMIT;
+
 public class Board {
     public final Case[][] grid;
     public int sizeX;
@@ -13,7 +15,7 @@ public class Board {
      */
     public Board() {
         // Build empty board
-        this.grid = new Case[2][2];
+        this.grid = new Case[LIMIT][LIMIT];
         // For coordinates iteration
         int x = 0;
         int y = 0;

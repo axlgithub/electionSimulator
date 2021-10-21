@@ -5,12 +5,22 @@ import com.isne.animals.Animal;
 import java.util.UUID;
 
 public class Case {
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    private String symbol;
     private UUID id;
     private int posX;
     private int posY;
     private String type;
     private boolean isBusy;
     public Animal content = null;
+    public String backgroundColor;
 
     public UUID getId() {
         return id;
