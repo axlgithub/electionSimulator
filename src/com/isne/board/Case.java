@@ -10,7 +10,7 @@ public class Case {
     private int posY;
     private String type;
     private boolean isBusy;
-    public Animal content=null;
+    public Animal content = null;
 
     public UUID getId() {
         return id;
@@ -52,5 +52,8 @@ public class Case {
         isBusy = busy;
     }
 
-
+    public Case() {
+        this.setId(UUID.randomUUID());
+        this.setBusy(false);
+    }
 }

@@ -10,10 +10,31 @@ public class Board {
     /**
      * Constructor for Board initialization
      *
-     * @param n
      */
-    public Board(int n) {
-        this.grid = new Case[n][n];
+    public Board() {
+        // Build empty board
+        this.grid = new Case[2][2];
+        // For coordinates iteration
+        int x = 0;
+        int y = 0;
+
+        // Fill with Ground
+        for (Case[] i:this.grid){
+            for (Case caseElement: i){
+                caseElement = new Ground();
+                caseElement.setPosX(x);
+                caseElement.setPosY(y);
+                this.grid[x][y] = caseElement;
+                y++;
+            }
+            y = 0;
+            x++;
+        }
+
+        // Place Water
+        // Place Plants
+        // Place Animals
+        // Place Masters
     }
 
     /**

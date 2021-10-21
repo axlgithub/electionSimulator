@@ -4,6 +4,8 @@ import com.isne.animals.Animal;
 import com.isne.animals.Carnivorus;
 import com.isne.animals.Herbivorus;
 import com.isne.board.Board;
+import com.isne.board.Case;
+import com.isne.board.Ground;
 import com.isne.master.MasterHippopotamus;
 
 public class Main {
@@ -20,12 +22,14 @@ public class Main {
         System.out.println(pipou2);
 
 
-        Board newBoard = new Board(2);
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++)
-                System.out.println(i + ":" + j);
+        Board newBoard = new Board();
+
+        for (Case[] i:newBoard.grid){
+            for (Case caseElement: i){
+                System.out.println(caseElement.getId());
+            }
         }
 
-
+        System.out.println("test");
     }
     }
