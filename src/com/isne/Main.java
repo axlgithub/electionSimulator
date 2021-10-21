@@ -28,16 +28,4 @@ public class Main {
 
 
     }
-
-    public void manageHungerEndOfTurn(Board board){
-        Animal animal;
-        for (int x=0; x<board.sizeX;x++){
-            for (int y=0; y<board.sizeY;y++){
-                if (board.getCaseAt(x,y).content != null ) {
-                    animal = board.getCaseAt(x,y).content;
-                    animal.setHunger( animal.getHunger() -1);
-                }
-                }
-            }
-        }
     }
