@@ -1,5 +1,7 @@
 package com.isne.board;
 
+import com.isne.animals.Animal;
+
 import java.util.UUID;
 
 public class Case {
@@ -8,6 +10,7 @@ public class Case {
     private int posY;
     private String type;
     private boolean isBusy;
+    public Animal content=null;
 
     public UUID getId() {
         return id;
