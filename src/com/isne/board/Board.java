@@ -11,7 +11,6 @@ public class Board {
 
     /**
      * Constructor for Board initialization
-     *
      */
     public Board() {
         // Build empty board
@@ -21,8 +20,8 @@ public class Board {
         int y = 0;
 
         // Fill with Ground
-        for (Case[] i:this.grid){
-            for (Case caseElement: i){
+        for (Case[] i : this.grid) {
+            for (Case caseElement : i) {
                 caseElement = new Ground();
                 caseElement.setPosX(x);
                 caseElement.setPosY(y);

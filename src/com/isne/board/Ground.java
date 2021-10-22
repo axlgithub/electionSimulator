@@ -1,13 +1,18 @@
 package com.isne.board;
 
 public class Ground extends Case {
-    public String background = "\u001B[43m";
-    public String Symbol = "...";
+    private final String background = "\u001B[43m";
+    private final String Symbol = "...";
 
     public Ground() {
         super();
         this.setType("Ground");
-        this.backgroundColor = background;
-        this.setSymbol(Symbol);
+        this.backgroundColor = getBackground();
+        this.setSymbol(getSymbol());
     }
+
+    public String getBackground() {return background;}
+
+    @Override
+    public String getSymbol() {return Symbol;}
 }
