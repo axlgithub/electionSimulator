@@ -9,6 +9,7 @@ public class MasterHippopotamus {
     public Case house;
     private final UUID id;
     private final String species;
+    public final String Symbol = " H ";
 
     private MasterHippopotamus() {
         id = UUID.randomUUID();

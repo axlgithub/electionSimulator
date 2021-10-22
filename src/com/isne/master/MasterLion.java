@@ -9,6 +9,7 @@ public class MasterLion {
     public Case house;
     private final UUID id;
     private final String species;
+    public final String Symbol = " L ";
 
     private MasterLion() {
         id = UUID.randomUUID();

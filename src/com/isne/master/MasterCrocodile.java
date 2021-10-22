@@ -9,6 +9,7 @@ public class MasterCrocodile {
     public Case house;
     private final UUID id;
     private final String species;
+    public final String Symbol = " C ";
 
     private MasterCrocodile() {
         id = UUID.randomUUID();

@@ -6,6 +6,7 @@ import static java.lang.Boolean.TRUE;
 
 public class Crocodile extends Carnivorous {
     private int speedOnWatter;
+    public final String Symbol = " c ";
 
     public Crocodile(){
         this.setHunger(25);

@@ -1,6 +1,7 @@
 package com.isne;
 
 import com.isne.animals.Carnivorous;
+import com.isne.animals.Crocodile;
 import com.isne.animals.Herbivorous;
 import com.isne.board.Board;
 import com.isne.board.Case;

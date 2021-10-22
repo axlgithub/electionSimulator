@@ -9,6 +9,7 @@ public class MasterGiraffe {
     public Case house;
     private final UUID id;
     private final String species;
+    public final String Symbol = " G ";
 
     private MasterGiraffe() {
         id = UUID.randomUUID();
