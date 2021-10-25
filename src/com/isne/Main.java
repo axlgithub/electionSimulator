@@ -10,7 +10,7 @@ import com.isne.master.MasterHippopotamus;
 import com.isne.master.MasterLion;
 
 public class Main {
-    public static final String ANSI_RESET = "\u001B[0m";
+
     public static final int LIMIT = 30;
 
 
@@ -29,39 +29,17 @@ public class Main {
 
         // Game generation
         Board newBoard = new Board();
-        // See what is inside
-        int iterator = 0;
-        for (Case[] i : newBoard.grid) {
-            for (Case caseElement : i) {
-                // Check if Master instance
-                if (caseElement.master != null) {
-                    if (caseElement.master instanceof MasterLion) {
-                        MasterLion temp = (MasterLion) caseElement.master;
-                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
-                    }
-                    if (caseElement.master instanceof MasterCrocodile) {
-                        MasterCrocodile temp = (MasterCrocodile) caseElement.master;
-                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
-                    }
+        // Display TODO : at each step refresh (4 times in turn)
+        clearConsole();
+        newBoard.show();
 
-                    if (caseElement.master instanceof MasterGiraffe) {
-                        MasterGiraffe temp = (MasterGiraffe) caseElement.master;
-                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
-                    }
-                    if (caseElement.master instanceof MasterHippopotamus) {
-                        MasterHippopotamus temp = (MasterHippopotamus) caseElement.master;
-                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
-                    }
-                } else {
-                    System.out.print(caseElement.backgroundColor + caseElement.getSymbol() + ANSI_RESET);
-                }
+    }
 
-                iterator++;
-                if (iterator % LIMIT == 0) {
-                    System.out.print("\n");
-                }
-            }
-        }
-
+    /**
+     * Clear console, only works on execution (not in IDE)
+     */
+    private static void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

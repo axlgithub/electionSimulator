@@ -18,6 +18,8 @@ public class Board {
     public int sizeX;
     public int sizeY;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+
     /**
      * Constructor for Board initialization
      */
@@ -225,6 +227,44 @@ public class Board {
                     if (animal.getHunger() == 0) {
                         board.grid[x][y].content = null;
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * Show board content
+     */
+    public void show() {
+        int iterator = 0;
+        for (Case[] i : this.grid) {
+            for (Case caseElement : i) {
+                // Check if Master instance
+                if (caseElement.master != null) {
+                    if (caseElement.master instanceof MasterLion) {
+                        MasterLion temp = (MasterLion) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+                    if (caseElement.master instanceof MasterCrocodile) {
+                        MasterCrocodile temp = (MasterCrocodile) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+
+                    if (caseElement.master instanceof MasterGiraffe) {
+                        MasterGiraffe temp = (MasterGiraffe) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+                    if (caseElement.master instanceof MasterHippopotamus) {
+                        MasterHippopotamus temp = (MasterHippopotamus) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+                } else {
+                    System.out.print(caseElement.backgroundColor + caseElement.getSymbol() + ANSI_RESET);
+                }
+
+                iterator++;
+                if (iterator % LIMIT == 0) {
+                    System.out.print("\n");
                 }
             }
         }
