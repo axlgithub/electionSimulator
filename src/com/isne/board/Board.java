@@ -31,6 +31,53 @@ public class Board {
             y = 0;
             x++;
         }
+        x = 0;
+        y = 0;
+
+        // Place SafeZones in corners by squares of 3
+        for (Case[] i : this.grid) {
+            if (x < 3) {
+                for (Case caseElement : i) {
+                    if (y < 3) {
+                        caseElement = new SafeZone("Lion");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+
+                    if (y > 26) {
+                        caseElement = new SafeZone("Crocodile");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+                    y++;
+                }
+            }
+
+            if (x > 26) {
+                for (Case caseElement : i) {
+                    if (y < 3) {
+                        caseElement = new SafeZone("Giraffe");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+
+                    if (y > 26) {
+                        caseElement = new SafeZone("Hippopotamus");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+                    y++;
+                }
+            }
+
+            y = 0;
+            x++;
+        }
+
 
         // Place Water
         // Place Plants
