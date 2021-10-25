@@ -9,7 +9,8 @@ public class MasterGiraffe {
     public Case house;
     private final UUID id;
     private final String species;
-    public final String Symbol = " G ";
+    private final String Symbol = " G ";
+    private final String background = "\u001B[40m";
 
     private MasterGiraffe() {
         id = UUID.randomUUID();
@@ -24,7 +25,11 @@ public class MasterGiraffe {
         return single_instance;
     }
 
-    public UUID getId() {
-        return id;
-    }
+    public UUID getId() {return id;}
+
+    public String getBackground() {return background;}
+
+    public String getSymbol() {return Symbol;}
+
+    public String getSpecies() {return species;}
 }

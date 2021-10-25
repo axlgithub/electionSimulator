@@ -5,7 +5,10 @@ import com.isne.animals.Crocodile;
 import com.isne.animals.Herbivorous;
 import com.isne.board.Board;
 import com.isne.board.Case;
+import com.isne.master.MasterCrocodile;
+import com.isne.master.MasterGiraffe;
 import com.isne.master.MasterHippopotamus;
+import com.isne.master.MasterLion;
 
 public class Main {
     public static final String ANSI_RESET = "\u001B[0m";
@@ -31,7 +34,30 @@ public class Main {
         int iterator = 0;
         for (Case[] i:newBoard.grid){
             for (Case caseElement: i){
-                System.out.print(caseElement.backgroundColor + caseElement.getSymbol() + ANSI_RESET);
+                // Check if Master instance
+                if (caseElement.master != null){
+                    if (caseElement.master instanceof MasterLion){
+                        MasterLion temp = (MasterLion) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+                    if (caseElement.master instanceof MasterCrocodile){
+                        MasterCrocodile temp = (MasterCrocodile) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+
+                    if (caseElement.master instanceof MasterGiraffe){
+                        MasterGiraffe temp = (MasterGiraffe) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+                    if (caseElement.master instanceof MasterHippopotamus){
+                        MasterHippopotamus temp = (MasterHippopotamus) caseElement.master;
+                        System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
+                    }
+                    }
+                else {
+                    System.out.print(caseElement.backgroundColor + caseElement.getSymbol() + ANSI_RESET);
+                }
+
                 iterator++;
                 if (iterator%LIMIT == 0){
                     System.out.print("\n");

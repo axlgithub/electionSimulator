@@ -1,6 +1,10 @@
 package com.isne.board;
 
 import com.isne.animals.Animal;
+import com.isne.master.MasterCrocodile;
+import com.isne.master.MasterGiraffe;
+import com.isne.master.MasterHippopotamus;
+import com.isne.master.MasterLion;
 
 import static com.isne.Main.LIMIT;
 
@@ -93,9 +97,9 @@ public class Board {
 
         // Place Water
         for (Case[] i : this.grid) {
-            if (x > 12 && x < 21){
+            if (x > 9 && x < 23){
                 for (Case caseElement : i) {
-                    if (y > 12 && y < 21){
+                    if (y > 9 && y < 23){
                         caseElement = new Water();
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
@@ -112,9 +116,30 @@ public class Board {
         x = 0;
         y = 0;
 
+        // Place Masters
+        MasterLion MLion = MasterLion.getInstance();
+        this.grid[1][1].setBusy(true);
+        this.grid[1][1].master = MLion;
+        MLion.house = this.grid[1][1];
+
+        MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
+        this.grid[28][1].setBusy(true);
+        this.grid[28][1].master = MCrocodile;
+        MCrocodile.house = this.grid[28][1];
+
+        MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
+        this.grid[1][28].setBusy(true);
+        this.grid[1][28].master = MGiraffe;
+        MGiraffe.house = this.grid[1][28];
+
+        MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
+        this.grid[28][28].setBusy(true);
+        this.grid[28][28].master = MHippopotamus;
+        MHippopotamus.house = this.grid[28][28];
+
         // Place Plants
         // Place Animals
-        // Place Masters
+
     }
 
     /**

@@ -7,6 +7,7 @@ import java.util.UUID;
 public class Case {
 
     public Animal content = null;
+    public Object master = null;
     public String backgroundColor;
     private String symbol;
     private UUID id;
