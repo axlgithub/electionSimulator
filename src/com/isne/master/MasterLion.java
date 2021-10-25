@@ -6,9 +6,11 @@ import java.util.UUID;
 
 public class MasterLion {
     private static MasterLion single_instance = null;
-    public Case house;
     private final UUID id;
     private final String species;
+    private final String Symbol = " L ";
+    private final String background = "\u001B[40m";
+    public Case house;
 
     private MasterLion() {
         id = UUID.randomUUID();
@@ -25,5 +27,17 @@ public class MasterLion {
 
     public UUID getId() {
         return id;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public String getSymbol() {
+        return Symbol;
+    }
+
+    public String getSpecies() {
+        return species;
     }
 }

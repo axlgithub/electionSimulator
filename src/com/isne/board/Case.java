@@ -5,12 +5,29 @@ import com.isne.animals.Animal;
 import java.util.UUID;
 
 public class Case {
+
+    public Animal content = null;
+    public Object master = null;
+    public String backgroundColor;
+    private String symbol;
     private UUID id;
     private int posX;
     private int posY;
     private String type;
     private boolean isBusy;
-    public Animal content = null;
+
+    public Case() {
+        this.setId(UUID.randomUUID());
+        this.setBusy(false);
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
 
     public UUID getId() {
         return id;
@@ -50,10 +67,5 @@ public class Case {
 
     public void setBusy(boolean busy) {
         isBusy = busy;
-    }
-
-    public Case() {
-        this.setId(UUID.randomUUID());
-        this.setBusy(false);
     }
 }

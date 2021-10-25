@@ -1,7 +1,18 @@
 package com.isne.board;
 
 import com.isne.animals.Animal;
+import com.isne.master.MasterCrocodile;
+import com.isne.master.MasterGiraffe;
+import com.isne.master.MasterHippopotamus;
+import com.isne.master.MasterLion;
 
+import java.util.Random;
+
+import static com.isne.Main.LIMIT;
+
+/**
+ * Default constructor, expensive in ressources
+ */
 public class Board {
     public final Case[][] grid;
     public int sizeX;
@@ -9,18 +20,71 @@ public class Board {
 
     /**
      * Constructor for Board initialization
-     *
      */
     public Board() {
         // Build empty board
-        this.grid = new Case[2][2];
-        // For coordinates iteration
+        this.grid = new Case[LIMIT][LIMIT];
+
+        // Fill whole board with Ground
+        fillGround();
+
+        placeSafeZones();
+        placeWater();
+        placeMasters();
+
+        // Place Plants & Animals
+        placeBeings();
+
+    }
+
+    /**
+     * Place 5 animals of each, 9 bushs & 6 trees, only used in constructor
+     */
+    private void placeBeings() {
+        int bushCount = 0;
+        int treeCount = 0;
+
+        // Bush
+        while (bushCount <= 9){
+            int x = new Random().nextInt(30);
+            int y = new Random().nextInt(30);
+
+            // not busy and not water and not safezone
+            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone"){
+                this.grid[x][y] = new Bush();
+                bushCount++;
+            }
+        }
+
+        // tree
+        while (treeCount <= 6){
+            int x = new Random().nextInt(30);
+            int y = new Random().nextInt(30);
+
+            // not busy and not water and not safezone
+            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone"){
+                this.grid[x][y] = new Tree();
+                treeCount++;
+            }
+        }
+
+        // Lion
+        // Crocodile
+        // Giraffe
+        // Hippopotamus
+
+
+    }
+
+    /**
+     * Fill all board with ground, only used in constructor
+     */
+    private void fillGround() {
         int x = 0;
         int y = 0;
 
-        // Fill with Ground
-        for (Case[] i:this.grid){
-            for (Case caseElement: i){
+        for (Case[] i : this.grid) {
+            for (Case caseElement : i) {
                 caseElement = new Ground();
                 caseElement.setPosX(x);
                 caseElement.setPosY(y);
@@ -30,11 +94,109 @@ public class Board {
             y = 0;
             x++;
         }
+    }
 
-        // Place Water
-        // Place Plants
-        // Place Animals
-        // Place Masters
+    /**
+     * Place water cases bys squares of 3, only used in constructor
+     */
+    private void placeWater() {
+        int x = 0;
+        int y = 0;
+
+        for (Case[] i : this.grid) {
+            if (x > 9 && x < 23) {
+                for (Case caseElement : i) {
+                    if (y > 9 && y < 23) {
+                        caseElement = new Water();
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+                    y++;
+                }
+            }
+            y = 0;
+            x++;
+        }
+    }
+
+    /**
+     * Place all 4 masters, only used in constructor
+     */
+    private void placeMasters() {
+        MasterLion MLion = MasterLion.getInstance();
+        this.grid[1][1].setBusy(true);
+        this.grid[1][1].master = MLion;
+        MLion.house = this.grid[1][1];
+
+        MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
+        this.grid[28][1].setBusy(true);
+        this.grid[28][1].master = MCrocodile;
+        MCrocodile.house = this.grid[28][1];
+
+        MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
+        this.grid[1][28].setBusy(true);
+        this.grid[1][28].master = MGiraffe;
+        MGiraffe.house = this.grid[1][28];
+
+        MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
+        this.grid[28][28].setBusy(true);
+        this.grid[28][28].master = MHippopotamus;
+        MHippopotamus.house = this.grid[28][28];
+    }
+
+    /**
+     * Place safe zones, used in constructor
+     */
+    private void placeSafeZones() {
+        int x = 0;
+        int y = 0;
+        for (Case[] i : this.grid) {
+            if (x < 3) {
+                for (Case caseElement : i) {
+                    // Top left
+                    if (y < 3) {
+                        caseElement = new SafeZone("Lion");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+
+                    // Top right
+                    if (y > 26) {
+                        caseElement = new SafeZone("Crocodile");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+                    y++;
+                }
+            }
+
+            if (x > 26) {
+                for (Case caseElement : i) {
+                    // Bottom left
+                    if (y < 3) {
+                        caseElement = new SafeZone("Giraffe");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+
+                    // Bottom right
+                    if (y > 26) {
+                        caseElement = new SafeZone("Hippopotamus");
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+                    y++;
+                }
+            }
+
+            y = 0;
+            x++;
+        }
     }
 
     /**

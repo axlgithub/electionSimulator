@@ -6,9 +6,11 @@ import java.util.UUID;
 
 public class MasterCrocodile {
     private static MasterCrocodile single_instance = null;
-    public Case house;
     private final UUID id;
     private final String species;
+    private final String Symbol = " C ";
+    private final String background = "\u001B[40m";
+    public Case house;
 
     private MasterCrocodile() {
         id = UUID.randomUUID();
@@ -25,6 +27,18 @@ public class MasterCrocodile {
 
     public UUID getId() {
         return id;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public String getSymbol() {
+        return Symbol;
+    }
+
+    public String getSpecies() {
+        return species;
     }
 }
 

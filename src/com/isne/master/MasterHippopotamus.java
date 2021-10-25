@@ -6,9 +6,11 @@ import java.util.UUID;
 
 public class MasterHippopotamus {
     private static MasterHippopotamus single_instance = null;
-    public Case house;
     private final UUID id;
     private final String species;
+    private final String Symbol = " H ";
+    private final String background = "\u001B[40m";
+    public Case house;
 
     private MasterHippopotamus() {
         id = UUID.randomUUID();
@@ -25,5 +27,17 @@ public class MasterHippopotamus {
 
     public UUID getId() {
         return id;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public String getSymbol() {
+        return Symbol;
+    }
+
+    public String getSpecies() {
+        return species;
     }
 }

@@ -5,9 +5,10 @@ import com.isne.board.Board;
 import static java.lang.Boolean.TRUE;
 
 public class Crocodile extends Carnivorous {
+    public final String Symbol = " c ";
     private int speedOnWatter;
 
-    public Crocodile(){
+    public Crocodile() {
         this.setHunger(25);
         this.setCanSwim(TRUE);
         this.setLife(50);
@@ -21,11 +22,11 @@ public class Crocodile extends Carnivorous {
         return speedOnWatter;
     }
 
-    public boolean condition(Board board, int x, int y){
-        return ((board.getCaseAt(x,y).content != null) && ( board.getCaseAt(x,y).content.getSpecies() == "Giraffe" || board.getCaseAt(x,y).content.getSpecies() == "Hippopotamus" ));
-    }
-
     public void setSpeedOnWatter(int speedOnWatter) {
         this.speedOnWatter = speedOnWatter;
+    }
+
+    public boolean condition(Board board, int x, int y) {
+        return ((board.getCaseAt(x, y).content != null) && (board.getCaseAt(x, y).content.getSpecies() == "Giraffe" || board.getCaseAt(x, y).content.getSpecies() == "Hippopotamus"));
     }
 }
