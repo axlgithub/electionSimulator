@@ -1,7 +1,7 @@
 package com.isne.board;
 
 public class Water extends Case {
-    private final  String background = "\u001B[44m";
+    private final String background = "\u001B[44m";
     private final String Symbol = "...";
 
     public Water() {
@@ -11,8 +11,12 @@ public class Water extends Case {
         this.setSymbol(Symbol);
     }
 
-    public String getBackground() {return background;}
+    public String getBackground() {
+        return background;
+    }
 
     @Override
-    public String getSymbol() {return Symbol;}
+    public String getSymbol() {
+        return Symbol;
+    }
 }

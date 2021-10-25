@@ -1,7 +1,5 @@
 package com.isne.board;
 
-import java.util.UUID;
-
 public class SafeZone extends Case {
     private final String Symbol = "---";
     private final String background = "\u001B[40m";
@@ -15,12 +13,20 @@ public class SafeZone extends Case {
         this.setOwner(owner);
     }
 
-    public String getBackground() {return background;}
+    public String getBackground() {
+        return background;
+    }
 
     @Override
-    public String getSymbol() {return Symbol;}
+    public String getSymbol() {
+        return Symbol;
+    }
 
-    public String getOwner() {return owner;}
+    public String getOwner() {
+        return owner;
+    }
 
-    public void setOwner(String owner) {this.owner = owner;}
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }

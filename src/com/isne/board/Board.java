@@ -6,6 +6,8 @@ import com.isne.master.MasterGiraffe;
 import com.isne.master.MasterHippopotamus;
 import com.isne.master.MasterLion;
 
+import java.util.Random;
+
 import static com.isne.Main.LIMIT;
 
 /**
@@ -30,8 +32,47 @@ public class Board {
         placeWater();
         placeMasters();
 
-        // Place Plants
-        // Place Animals
+        // Place Plants & Animals
+        placeBeings();
+
+    }
+
+    /**
+     * Place 5 animals of each, 9 bushs & 6 trees, only used in constructor
+     */
+    private void placeBeings() {
+        int bushCount = 0;
+        int treeCount = 0;
+
+        // Bush
+        while (bushCount <= 9){
+            int x = new Random().nextInt(30);
+            int y = new Random().nextInt(30);
+
+            // not busy and not water and not safezone
+            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone"){
+                this.grid[x][y] = new Bush();
+                bushCount++;
+            }
+        }
+
+        // tree
+        while (treeCount <= 6){
+            int x = new Random().nextInt(30);
+            int y = new Random().nextInt(30);
+
+            // not busy and not water and not safezone
+            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone"){
+                this.grid[x][y] = new Tree();
+                treeCount++;
+            }
+        }
+
+        // Lion
+        // Crocodile
+        // Giraffe
+        // Hippopotamus
+
 
     }
 
@@ -39,8 +80,8 @@ public class Board {
      * Fill all board with ground, only used in constructor
      */
     private void fillGround() {
-        int x =0;
-        int y =0;
+        int x = 0;
+        int y = 0;
 
         for (Case[] i : this.grid) {
             for (Case caseElement : i) {
@@ -59,13 +100,13 @@ public class Board {
      * Place water cases bys squares of 3, only used in constructor
      */
     private void placeWater() {
-        int x =0;
-        int y =0;
+        int x = 0;
+        int y = 0;
 
         for (Case[] i : this.grid) {
-            if (x > 9 && x < 23){
+            if (x > 9 && x < 23) {
                 for (Case caseElement : i) {
-                    if (y > 9 && y < 23){
+                    if (y > 9 && y < 23) {
                         caseElement = new Water();
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);

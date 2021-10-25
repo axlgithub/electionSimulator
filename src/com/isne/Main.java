@@ -1,7 +1,6 @@
 package com.isne;
 
 import com.isne.animals.Carnivorous;
-import com.isne.animals.Crocodile;
 import com.isne.animals.Herbivorous;
 import com.isne.board.Board;
 import com.isne.board.Case;
@@ -32,38 +31,37 @@ public class Main {
         Board newBoard = new Board();
         // See what is inside
         int iterator = 0;
-        for (Case[] i:newBoard.grid){
-            for (Case caseElement: i){
+        for (Case[] i : newBoard.grid) {
+            for (Case caseElement : i) {
                 // Check if Master instance
-                if (caseElement.master != null){
-                    if (caseElement.master instanceof MasterLion){
+                if (caseElement.master != null) {
+                    if (caseElement.master instanceof MasterLion) {
                         MasterLion temp = (MasterLion) caseElement.master;
                         System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
                     }
-                    if (caseElement.master instanceof MasterCrocodile){
+                    if (caseElement.master instanceof MasterCrocodile) {
                         MasterCrocodile temp = (MasterCrocodile) caseElement.master;
                         System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
                     }
 
-                    if (caseElement.master instanceof MasterGiraffe){
+                    if (caseElement.master instanceof MasterGiraffe) {
                         MasterGiraffe temp = (MasterGiraffe) caseElement.master;
                         System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
                     }
-                    if (caseElement.master instanceof MasterHippopotamus){
+                    if (caseElement.master instanceof MasterHippopotamus) {
                         MasterHippopotamus temp = (MasterHippopotamus) caseElement.master;
                         System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
                     }
-                    }
-                else {
+                } else {
                     System.out.print(caseElement.backgroundColor + caseElement.getSymbol() + ANSI_RESET);
                 }
 
                 iterator++;
-                if (iterator%LIMIT == 0){
+                if (iterator % LIMIT == 0) {
                     System.out.print("\n");
                 }
             }
         }
 
     }
-    }
+}

@@ -2,7 +2,6 @@ package com.isne.animals;
 
 import com.isne.board.Board;
 import com.isne.board.Case;
-import com.isne.board.Plant;
 
 import java.util.UUID;
 
@@ -20,30 +19,30 @@ public abstract class Animal {
 
     public abstract void move();
 
-    public double distance(int abscissa1, int ordinate1, int abscissa2, int ordinate2){
-        return (Math.sqrt( Math.pow ( (abscissa1-abscissa2) , 2 ) + Math.pow ( (ordinate1-ordinate2) , 2 ) ));
+    public double distance(int abscissa1, int ordinate1, int abscissa2, int ordinate2) {
+        return (Math.sqrt(Math.pow((abscissa1 - abscissa2), 2) + Math.pow((ordinate1 - ordinate2), 2)));
     }
 
 
-    public Case findClosestFood(Board board){
+    public Case findClosestFood(Board board) {
         int maPositionX = this.getPositionX();
         int maPositionY = this.getPositionY();
-        double distanceMin = board.sizeX + board.sizeY ;
+        double distanceMin = board.sizeX + board.sizeY;
         int closestX = board.sizeX;
         int closestY = board.sizeY;
         Case caseMin = new Case();
-        for (int x=0; x<board.sizeX;x++){
-            for (int y=0; y<board.sizeY;y++){
-                if ( distance(maPositionX,maPositionY,x,y) < distanceMin) {
-                    if ( this.condition(board,x,y) ) {
-                        distanceMin=(maPositionX - x) + (maPositionY - y) ;
+        for (int x = 0; x < board.sizeX; x++) {
+            for (int y = 0; y < board.sizeY; y++) {
+                if (distance(maPositionX, maPositionY, x, y) < distanceMin) {
+                    if (this.condition(board, x, y)) {
+                        distanceMin = (maPositionX - x) + (maPositionY - y);
                         closestX = x;
                         closestY = y;
                     }
                 }
             }
         }
-        return board.getCaseAt(closestX,closestY);
+        return board.getCaseAt(closestX, closestY);
     }
 
     protected abstract boolean condition(Board board, int x, int y);
@@ -106,20 +105,20 @@ public abstract class Animal {
         this.life = life;
     }
 
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }
-
     public int getPositionX() {
         return positionX;
     }
 
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
     }
 
     public int getPositionY() {
         return positionY;
+    }
+
+    public void setPositionY(int positionY) {
+        this.positionY = positionY;
     }
 }
 

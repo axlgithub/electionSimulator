@@ -11,8 +11,12 @@ public class Ground extends Case {
         this.setSymbol(getSymbol());
     }
 
-    public String getBackground() {return background;}
+    public String getBackground() {
+        return background;
+    }
 
     @Override
-    public String getSymbol() {return Symbol;}
+    public String getSymbol() {
+        return Symbol;
+    }
 }
