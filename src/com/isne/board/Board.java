@@ -4,6 +4,9 @@ import com.isne.animals.Animal;
 
 import static com.isne.Main.LIMIT;
 
+/**
+ * Default constructor, expensive in ressources
+ */
 public class Board {
     public final Case[][] grid;
     public int sizeX;
@@ -31,6 +34,8 @@ public class Board {
             y = 0;
             x++;
         }
+
+        // Reset position for reuse
         x = 0;
         y = 0;
 
@@ -38,6 +43,7 @@ public class Board {
         for (Case[] i : this.grid) {
             if (x < 3) {
                 for (Case caseElement : i) {
+                    // Top left
                     if (y < 3) {
                         caseElement = new SafeZone("Lion");
                         caseElement.setPosX(x);
@@ -45,6 +51,7 @@ public class Board {
                         this.grid[x][y] = caseElement;
                     }
 
+                    // Top right
                     if (y > 26) {
                         caseElement = new SafeZone("Crocodile");
                         caseElement.setPosX(x);
@@ -57,6 +64,7 @@ public class Board {
 
             if (x > 26) {
                 for (Case caseElement : i) {
+                    // Bottom left
                     if (y < 3) {
                         caseElement = new SafeZone("Giraffe");
                         caseElement.setPosX(x);
@@ -64,6 +72,7 @@ public class Board {
                         this.grid[x][y] = caseElement;
                     }
 
+                    // Bottom right
                     if (y > 26) {
                         caseElement = new SafeZone("Hippopotamus");
                         caseElement.setPosX(x);
@@ -78,8 +87,31 @@ public class Board {
             x++;
         }
 
+        // Reset position for reuse
+        x = 0;
+        y = 0;
 
         // Place Water
+        for (Case[] i : this.grid) {
+            if (x > 12 && x < 21){
+                for (Case caseElement : i) {
+                    if (y > 12 && y < 21){
+                        caseElement = new Water();
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+                    y++;
+                }
+            }
+            y = 0;
+            x++;
+        }
+
+        // Reset position for reuse
+        x = 0;
+        y = 0;
+
         // Place Plants
         // Place Animals
         // Place Masters
