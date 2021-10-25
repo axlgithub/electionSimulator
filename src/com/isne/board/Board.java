@@ -45,24 +45,24 @@ public class Board {
         int treeCount = 0;
 
         // Bush
-        while (bushCount <= 9){
+        while (bushCount <= 9) {
             int x = new Random().nextInt(30);
             int y = new Random().nextInt(30);
 
             // not busy and not water and not safezone
-            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone"){
+            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone") {
                 this.grid[x][y] = new Bush();
                 bushCount++;
             }
         }
 
         // tree
-        while (treeCount <= 6){
+        while (treeCount <= 6) {
             int x = new Random().nextInt(30);
             int y = new Random().nextInt(30);
 
             // not busy and not water and not safezone
-            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone"){
+            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone") {
                 this.grid[x][y] = new Tree();
                 treeCount++;
             }
@@ -130,19 +130,19 @@ public class Board {
         MLion.house = this.grid[1][1];
 
         MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
-        this.grid[28][1].setBusy(true);
-        this.grid[28][1].master = MCrocodile;
-        MCrocodile.house = this.grid[28][1];
+        this.grid[LIMIT - 1][1].setBusy(true);
+        this.grid[LIMIT - 1][1].master = MCrocodile;
+        MCrocodile.house = this.grid[LIMIT - 1][1];
 
         MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
-        this.grid[1][28].setBusy(true);
-        this.grid[1][28].master = MGiraffe;
-        MGiraffe.house = this.grid[1][28];
+        this.grid[1][LIMIT - 1].setBusy(true);
+        this.grid[1][LIMIT - 1].master = MGiraffe;
+        MGiraffe.house = this.grid[1][LIMIT - 1];
 
         MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
-        this.grid[28][28].setBusy(true);
-        this.grid[28][28].master = MHippopotamus;
-        MHippopotamus.house = this.grid[28][28];
+        this.grid[LIMIT - 1][LIMIT - 1].setBusy(true);
+        this.grid[LIMIT - 1][LIMIT - 1].master = MHippopotamus;
+        MHippopotamus.house = this.grid[LIMIT - 1][LIMIT - 1];
     }
 
     /**
@@ -163,7 +163,7 @@ public class Board {
                     }
 
                     // Top right
-                    if (y > 26) {
+                    if (y > LIMIT - 3) {
                         caseElement = new SafeZone("Crocodile");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
@@ -173,7 +173,7 @@ public class Board {
                 }
             }
 
-            if (x > 26) {
+            if (x > LIMIT - 3) {
                 for (Case caseElement : i) {
                     // Bottom left
                     if (y < 3) {
@@ -184,7 +184,7 @@ public class Board {
                     }
 
                     // Bottom right
-                    if (y > 26) {
+                    if (y > LIMIT - 3) {
                         caseElement = new SafeZone("Hippopotamus");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
