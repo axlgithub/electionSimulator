@@ -22,11 +22,26 @@ public class Board {
     public Board() {
         // Build empty board
         this.grid = new Case[LIMIT][LIMIT];
-        // For coordinates iteration
-        int x = 0;
-        int y = 0;
 
-        // Fill with Ground
+        // Fill whole board with Ground
+        fillGround();
+
+        placeSafeZones();
+        placeWater();
+        placeMasters();
+
+        // Place Plants
+        // Place Animals
+
+    }
+
+    /**
+     * Fill all board with ground, only used in constructor
+     */
+    private void fillGround() {
+        int x =0;
+        int y =0;
+
         for (Case[] i : this.grid) {
             for (Case caseElement : i) {
                 caseElement = new Ground();
@@ -38,12 +53,63 @@ public class Board {
             y = 0;
             x++;
         }
+    }
 
-        // Reset position for reuse
-        x = 0;
-        y = 0;
+    /**
+     * Place water cases bys squares of 3, only used in constructor
+     */
+    private void placeWater() {
+        int x =0;
+        int y =0;
 
-        // Place SafeZones in corners by squares of 3
+        for (Case[] i : this.grid) {
+            if (x > 9 && x < 23){
+                for (Case caseElement : i) {
+                    if (y > 9 && y < 23){
+                        caseElement = new Water();
+                        caseElement.setPosX(x);
+                        caseElement.setPosY(y);
+                        this.grid[x][y] = caseElement;
+                    }
+                    y++;
+                }
+            }
+            y = 0;
+            x++;
+        }
+    }
+
+    /**
+     * Place all 4 masters, only used in constructor
+     */
+    private void placeMasters() {
+        MasterLion MLion = MasterLion.getInstance();
+        this.grid[1][1].setBusy(true);
+        this.grid[1][1].master = MLion;
+        MLion.house = this.grid[1][1];
+
+        MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
+        this.grid[28][1].setBusy(true);
+        this.grid[28][1].master = MCrocodile;
+        MCrocodile.house = this.grid[28][1];
+
+        MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
+        this.grid[1][28].setBusy(true);
+        this.grid[1][28].master = MGiraffe;
+        MGiraffe.house = this.grid[1][28];
+
+        MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
+        this.grid[28][28].setBusy(true);
+        this.grid[28][28].master = MHippopotamus;
+        MHippopotamus.house = this.grid[28][28];
+    }
+
+    /**
+     * Place safe zones, used in constructor
+     */
+    private void placeSafeZones() {
+        int x = 0;
+        int y = 0;
         for (Case[] i : this.grid) {
             if (x < 3) {
                 for (Case caseElement : i) {
@@ -90,56 +156,6 @@ public class Board {
             y = 0;
             x++;
         }
-
-        // Reset position for reuse
-        x = 0;
-        y = 0;
-
-        // Place Water
-        for (Case[] i : this.grid) {
-            if (x > 9 && x < 23){
-                for (Case caseElement : i) {
-                    if (y > 9 && y < 23){
-                        caseElement = new Water();
-                        caseElement.setPosX(x);
-                        caseElement.setPosY(y);
-                        this.grid[x][y] = caseElement;
-                    }
-                    y++;
-                }
-            }
-            y = 0;
-            x++;
-        }
-
-        // Reset position for reuse
-        x = 0;
-        y = 0;
-
-        // Place Masters
-        MasterLion MLion = MasterLion.getInstance();
-        this.grid[1][1].setBusy(true);
-        this.grid[1][1].master = MLion;
-        MLion.house = this.grid[1][1];
-
-        MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
-        this.grid[28][1].setBusy(true);
-        this.grid[28][1].master = MCrocodile;
-        MCrocodile.house = this.grid[28][1];
-
-        MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
-        this.grid[1][28].setBusy(true);
-        this.grid[1][28].master = MGiraffe;
-        MGiraffe.house = this.grid[1][28];
-
-        MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
-        this.grid[28][28].setBusy(true);
-        this.grid[28][28].master = MHippopotamus;
-        MHippopotamus.house = this.grid[28][28];
-
-        // Place Plants
-        // Place Animals
-
     }
 
     /**
