@@ -1,6 +1,6 @@
 package com.isne.board;
 
-import com.isne.animals.Animal;
+import com.isne.animals.*;
 import com.isne.master.MasterCrocodile;
 import com.isne.master.MasterGiraffe;
 import com.isne.master.MasterHippopotamus;
@@ -166,7 +166,7 @@ public class Board {
 
                     // Top right
                     if (y > LIMIT - 3) {
-                        caseElement = new SafeZone("Crocodile");
+                        caseElement = new SafeZone("Giraffe");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
                         this.grid[x][y] = caseElement;
@@ -179,7 +179,7 @@ public class Board {
                 for (Case caseElement : i) {
                     // Bottom left
                     if (y < 3) {
-                        caseElement = new SafeZone("Giraffe");
+                        caseElement = new SafeZone("Crocodile");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
                         this.grid[x][y] = caseElement;
@@ -269,4 +269,32 @@ public class Board {
             }
         }
     }
+
+    public void generateAnimalsOnTheBoard(int numberOfAnimalsCreated){
+        Lion newLion;
+        Giraffe newGiraffe;
+        Crocodile newCrocodile;
+        Hippopotamus newHippopotamus;
+        int x=0; // other counter to be able to set the new instance in an available spot.
+        int c;
+        for (int y=1; y<= numberOfAnimalsCreated; y++) {
+            c = y;
+            if(y>2 && y<=4){
+                c=0;
+                x = x+1;
+            }
+            if(y>4){
+                x = c = y-4;
+            }
+            newLion = new Lion();
+            newGiraffe = new Giraffe();
+            newCrocodile = new Crocodile();
+            newHippopotamus = new Hippopotamus();
+            this.getCaseAt(1+c ,1+x).content= newLion;
+            this.getCaseAt(1+c,LIMIT - 1-x).content=newGiraffe;
+            this.getCaseAt(LIMIT - 1-c,LIMIT - 1-x).content=newHippopotamus;
+            this.getCaseAt(LIMIT - 1-x,1+c).content=newCrocodile;
+        }
+    }
+
 }

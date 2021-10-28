@@ -33,6 +33,8 @@ public class Main {
         clearConsole();
         newBoard.show();
 
+
+
     }
 
     /**
