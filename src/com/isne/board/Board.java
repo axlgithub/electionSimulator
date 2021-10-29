@@ -127,18 +127,18 @@ public class Board {
      */
     private void placeMasters() {
         MasterLion MLion = MasterLion.getInstance();
-        this.grid[1][1].setBusy(true);
-        this.grid[1][1].master = MLion;
+        this.grid[0][0].setBusy(true);
+        this.grid[0][0].master = MLion;
         MLion.house = this.grid[1][1];
 
         MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
-        this.grid[LIMIT - 1][1].setBusy(true);
-        this.grid[LIMIT - 1][1].master = MCrocodile;
+        this.grid[LIMIT - 1][0].setBusy(true);
+        this.grid[LIMIT - 1][0].master = MCrocodile;
         MCrocodile.house = this.grid[LIMIT - 1][1];
 
         MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
-        this.grid[1][LIMIT - 1].setBusy(true);
-        this.grid[1][LIMIT - 1].master = MGiraffe;
+        this.grid[0][LIMIT - 1].setBusy(true);
+        this.grid[0][LIMIT - 1].master = MGiraffe;
         MGiraffe.house = this.grid[1][LIMIT - 1];
 
         MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
@@ -165,7 +165,7 @@ public class Board {
                     }
 
                     // Top right
-                    if (y > LIMIT - 3) {
+                    if (y >= LIMIT - 3) {
                         caseElement = new SafeZone("Giraffe");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
@@ -175,7 +175,7 @@ public class Board {
                 }
             }
 
-            if (x > LIMIT - 3) {
+            if (x >= LIMIT - 3) {
                 for (Case caseElement : i) {
                     // Bottom left
                     if (y < 3) {
@@ -186,7 +186,7 @@ public class Board {
                     }
 
                     // Bottom right
-                    if (y > LIMIT - 3) {
+                    if (y >= LIMIT - 3) {
                         caseElement = new SafeZone("Hippopotamus");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
