@@ -4,6 +4,9 @@ import com.isne.board.Board;
 import com.isne.board.Case;
 
 public class Hippopotamus extends Herbivorous {
+    public Hippopotamus() {
+        this.setSpecies("Hippopotamus");
+    }
     public final String Symbol = " h ";
 
     public boolean condition(Board board, int x, int y) {

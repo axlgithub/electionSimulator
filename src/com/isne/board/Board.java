@@ -270,31 +270,36 @@ public class Board {
         }
     }
 
-    public void generateAnimalsOnTheBoard(int numberOfAnimalsCreated){
+    /**
+     * initialise the board with the chosen number of animal instances.
+     * @param numberOfAnimalsToCreate, set the number of animals which will be created for each species.
+     *
+     */
+    public void generateAnimalsOnTheBoard(int numberOfAnimalsToCreate){
+        int numberOfAnimalsAlreadyCreated=0;
         Lion newLion;
         Giraffe newGiraffe;
         Crocodile newCrocodile;
         Hippopotamus newHippopotamus;
-        int x=0; // other counter to be able to set the new instance in an available spot.
-        int c;
-        for (int y=1; y<= numberOfAnimalsCreated; y++) {
-            c = y;
-            if(y>2 && y<=4){
-                c=0;
-                x = x+1;
+        for (int x=0; x<3;x++){
+            for (int y=0; y<3;y++){ // those loops in order to browse the nine cases of the safe-zone.
+                if(x !=0 || y !=0){ // in order to avoid putting an element on the master
+                    newLion = new Lion(); // at each new loop we add one animal of each species on the board.
+                    newGiraffe = new Giraffe();
+                    newCrocodile = new Crocodile();
+                    newHippopotamus = new Hippopotamus();
+                    this.getCaseAt(1+x ,1+y).content= newLion;
+                    this.getCaseAt(1+x,LIMIT -1-y).content=newGiraffe;
+                    this.getCaseAt(LIMIT - 1-x,LIMIT - 1-y).content=newHippopotamus;
+                    this.getCaseAt(LIMIT - 1-x,1+y).content=newCrocodile;
+                    numberOfAnimalsAlreadyCreated +=1;
+                    if(numberOfAnimalsAlreadyCreated==numberOfAnimalsToCreate){
+                        return;
+                    }
+                    }
             }
-            if(y>4){
-                x = c = y-4;
-            }
-            newLion = new Lion();
-            newGiraffe = new Giraffe();
-            newCrocodile = new Crocodile();
-            newHippopotamus = new Hippopotamus();
-            this.getCaseAt(1+c ,1+x).content= newLion;
-            this.getCaseAt(1+c,LIMIT - 1-x).content=newGiraffe;
-            this.getCaseAt(LIMIT - 1-c,LIMIT - 1-x).content=newHippopotamus;
-            this.getCaseAt(LIMIT - 1-x,1+c).content=newCrocodile;
         }
     }
+
 
 }

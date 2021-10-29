@@ -16,22 +16,25 @@ public class Main {
 
     public static void main(String[] args) {
         // Tests
-        Carnivorous John = new Carnivorous();
-        John.setHunger(2);
-        System.out.println(John.getHunger());
-        Herbivorous hector = new Herbivorous();
-        John.fight(hector);
-        MasterHippopotamus pipou = MasterHippopotamus.getInstance();
-        System.out.println(pipou);
-        MasterHippopotamus pipou2 = MasterHippopotamus.getInstance();
-        System.out.println(pipou2);
+        //Carnivorous John = new Carnivorous();
+        //John.setHunger(2);
+        //System.out.println(John.getHunger());
+        //Herbivorous hector = new Herbivorous();
+        //John.fight(hector);
+        //MasterHippopotamus pipou = MasterHippopotamus.getInstance();
+        //System.out.println(pipou);
+        //MasterHippopotamus pipou2 = MasterHippopotamus.getInstance();
+        //System.out.println(pipou2);
 
 
         // Game generation
         Board newBoard = new Board();
         // Display TODO : at each step refresh (4 times in turn)
         clearConsole();
+        newBoard.generateAnimalsOnTheBoard(5);
+        System.out.println(newBoard.getCaseAt(1,2).content.getSpecies());
         newBoard.show();
+
 
 
 

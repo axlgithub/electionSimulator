@@ -3,6 +3,9 @@ package com.isne.animals;
 import com.isne.board.Board;
 
 public class Lion extends Carnivorous {
+    public Lion() {
+        this.setSpecies("Lion");
+    }
     public final String Symbol = " l ";
 
     public boolean condition(Board board, int x, int y) {
