@@ -15,8 +15,8 @@ public class Carnivorous extends Animal {
 
     // attack an animal
     public boolean fight(Animal animal) {
-        int randCarnivorous = (int) Math.floor(Math.random()*(10+1));
-        int randHerbivorous = (int) Math.floor(Math.random()*(8+1));
+        int randCarnivorous = (int) Math.floor(Math.random() * (10 + 1));
+        int randHerbivorous = (int) Math.floor(Math.random() * (8 + 1));
         int carnivorousFightNumber = randCarnivorous * this.getStrength() / this.getStrength();
         int herbivorousFightNumber = randHerbivorous * animal.getStrength() / animal.getStrength();
         return carnivorousFightNumber > herbivorousFightNumber;

@@ -15,44 +15,46 @@ public abstract class Animal {
     private String species;
     private int positionX;
     private int positionY;
+    private String Symbol;
 
 
-    public void move( Board board){
-        Case closestFood = this.findClosestFood( board);
-        positionX=this.getPositionX();
-        positionY=this.getPositionY();
+    public void move(Board board) {
+        Case closestFood = this.findClosestFood(board);
+        positionX = this.getPositionX();
+        positionY = this.getPositionY();
         int destinationX = closestFood.getPosX();
         int destinationY = closestFood.getPosY();
         int directionX;
         int directionY;
-        for( int i=0;i<=this.getSpeedOnGround();i++ ){
-            directionX = this.findDirection(destinationX,positionX);
-            directionY = this.findDirection(destinationY,positionY);
-            if ( ! this.moveFromOneTileX(board,positionX,positionY, directionX) ){
-                this.moveFromOneTileY( board, positionX, positionY, directionY);
+        for (int i = 0; i <= this.getSpeedOnGround(); i++) {
+            directionX = this.findDirection(destinationX, positionX);
+            directionY = this.findDirection(destinationY, positionY);
+            if (!this.moveFromOneTileX(board, positionX, positionY, directionX)) {
+                this.moveFromOneTileY(board, positionX, positionY, directionY);
             }
         }
     }
 
     /**
      * return true if the animal as been able to move on the x-axis, false otherwise. The direction parameter is either 1 or -1 or 0. It saids if the animal must go to the right, left of its actual position.
+     *
      * @param board
      * @param PositionX
      * @param PositionY
      * @param direction
      * @return
      */
-    public boolean moveFromOneTileX ( Board board, int PositionX, int PositionY, int direction ){ //direction equals + or - 1 according to the direction you wanna go
-        Case currentCase = board.getCaseAt(PositionX,PositionY );
-        Case wantedCase = board.getCaseAt(PositionX + direction,PositionY );
-        if ( wantedCase.getType()=="Ground" && wantedCase.content == null && direction != 0){
-            wantedCase.content= this;
-            currentCase.content=null;
+    public boolean moveFromOneTileX(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
+        Case currentCase = board.getCaseAt(PositionX, PositionY);
+        Case wantedCase = board.getCaseAt(PositionX + direction, PositionY);
+        if (wantedCase.getType() == "Ground" && wantedCase.content == null && direction != 0) {
+            wantedCase.content = this;
+            currentCase.content = null;
             return true;
         }
-        if ( wantedCase.getType()=="Water" && this.canSwim && wantedCase.content == null && direction != 0){
-            wantedCase.content= this;
-            currentCase.content=null;
+        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null && direction != 0) {
+            wantedCase.content = this;
+            currentCase.content = null;
             return true;
         }
         return false;
@@ -60,27 +62,28 @@ public abstract class Animal {
 
     /**
      * return true if the animal as been able to move on the x-axis, false otherwise. The direction parameter is either 1 or -1 or 0. It saids if the animal must go to the right, left of its actual position.
+     *
      * @param board
      * @param PositionX
      * @param PositionY
      * @param direction
      * @return
      */
-    public void moveFromOneTileY ( Board board, int PositionX, int PositionY, int direction ){ //direction equals + or - 1 according to the direction you wanna go
-        Case wantedCase = board.getCaseAt(PositionX ,PositionY + direction);
-        Case currentCase = board.getCaseAt(PositionX,PositionY );
-        if ( wantedCase.getType()=="Ground" && wantedCase.content == null && direction != 0){
-            wantedCase.content= this;
-            currentCase.content=null;
+    public void moveFromOneTileY(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
+        Case wantedCase = board.getCaseAt(PositionX, PositionY + direction);
+        Case currentCase = board.getCaseAt(PositionX, PositionY);
+        if (wantedCase.getType() == "Ground" && wantedCase.content == null && direction != 0) {
+            wantedCase.content = this;
+            currentCase.content = null;
         }
-        if ( wantedCase.getType()=="Water" && this.canSwim && wantedCase.content == null && direction != 0){
-            wantedCase.content= this;
-            currentCase.content=null;
+        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null && direction != 0) {
+            wantedCase.content = this;
+            currentCase.content = null;
         }
     }
 
-    public int findDirection( int destination, int position){
-        return Integer.compare(destination - position , 0);
+    public int findDirection(int destination, int position) {
+        return Integer.compare(destination - position, 0);
     }
 
 
@@ -113,6 +116,14 @@ public abstract class Animal {
     protected abstract boolean condition(Board board, int x, int y);
 
     /* Getters and setters   */
+
+    public String getSymbol() {
+        return Symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        Symbol = symbol;
+    }
 
     public int getStrength() {
         return strength;

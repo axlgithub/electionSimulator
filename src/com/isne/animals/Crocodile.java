@@ -2,20 +2,19 @@ package com.isne.animals;
 
 import com.isne.board.Board;
 
-import static java.lang.Boolean.TRUE;
-
 public class Crocodile extends Carnivorous {
     public final String Symbol = " c ";
     private int speedOnWatter;
 
     public Crocodile() {
         this.setHunger(25);
-        this.setCanSwim(TRUE);
+        this.setCanSwim(true);
         this.setLife(50);
         this.setStrength(10);
         this.setSpeedOnGround(3);
         this.setSpeedOnWatter(3);
         this.setSpecies("Crocodile");
+        this.setSymbol(Symbol);
     }
 
     public int getSpeedOnWatter() {

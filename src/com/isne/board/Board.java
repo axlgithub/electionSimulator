@@ -9,16 +9,16 @@ import com.isne.master.MasterLion;
 import java.util.Random;
 
 import static com.isne.Main.LIMIT;
+import static com.isne.Main.SAFEZONESIZE;
 
 /**
  * Default constructor, expensive in ressources
  */
 public class Board {
+    public static final String ANSI_RESET = "\u001B[0m";
     public final Case[][] grid;
     public int sizeX;
     public int sizeY;
-
-    public static final String ANSI_RESET = "\u001B[0m";
 
     /**
      * Constructor for Board initialization
@@ -30,19 +30,18 @@ public class Board {
         // Fill whole board with Ground
         fillGround();
 
+        // Replace some cases with
         placeSafeZones();
         placeWater();
         placeMasters();
-
-        // Place Plants & Animals
-        placeBeings();
+        placePlants();
 
     }
 
     /**
      * Place 5 animals of each, 9 bushs & 6 trees, only used in constructor
      */
-    private void placeBeings() {
+    private void placePlants() {
         int bushCount = 0;
         int treeCount = 0;
 
@@ -99,7 +98,7 @@ public class Board {
     }
 
     /**
-     * Place water cases bys squares of 3, only used in constructor
+     * Place water cases, only used in constructor
      */
     private void placeWater() {
         int x = 0;
@@ -154,10 +153,10 @@ public class Board {
         int x = 0;
         int y = 0;
         for (Case[] i : this.grid) {
-            if (x < 3) {
+            if (x < SAFEZONESIZE) {
                 for (Case caseElement : i) {
                     // Top left
-                    if (y < 3) {
+                    if (y < SAFEZONESIZE) {
                         caseElement = new SafeZone("Lion");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
@@ -165,7 +164,7 @@ public class Board {
                     }
 
                     // Top right
-                    if (y >= LIMIT - 3) {
+                    if (y >= LIMIT - SAFEZONESIZE) {
                         caseElement = new SafeZone("Giraffe");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
@@ -175,10 +174,10 @@ public class Board {
                 }
             }
 
-            if (x >= LIMIT - 3) {
+            if (x >= LIMIT - SAFEZONESIZE) {
                 for (Case caseElement : i) {
                     // Bottom left
-                    if (y < 3) {
+                    if (y < SAFEZONESIZE) {
                         caseElement = new SafeZone("Crocodile");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
@@ -186,7 +185,7 @@ public class Board {
                     }
 
                     // Bottom right
-                    if (y >= LIMIT - 3) {
+                    if (y >= LIMIT - SAFEZONESIZE) {
                         caseElement = new SafeZone("Hippopotamus");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
@@ -214,18 +213,16 @@ public class Board {
 
     /**
      * Decrease hunger at each end of turn. If 0 then dies, removed from grid content and garbage collector should remove the unused object
-     *
-     * @param board
      */
-    public void manageHunger(Board board) {
+    public void manageHunger() {
         Animal animal;
-        for (int x = 0; x < board.sizeX; x++) {
-            for (int y = 0; y < board.sizeY; y++) {
-                if (board.getCaseAt(x, y).content != null) {
-                    animal = board.getCaseAt(x, y).content;
+        for (int x = 0; x < this.sizeX; x++) {
+            for (int y = 0; y < this.sizeY; y++) {
+                if (this.getCaseAt(x, y).content != null) {
+                    animal = this.getCaseAt(x, y).content;
                     animal.setHunger(animal.getHunger() - 1);
                     if (animal.getHunger() == 0) {
-                        board.grid[x][y].content = null;
+                        this.grid[x][y].content = null;
                     }
                 }
             }
@@ -258,6 +255,10 @@ public class Board {
                         MasterHippopotamus temp = (MasterHippopotamus) caseElement.master;
                         System.out.print(temp.getBackground() + temp.getSymbol() + ANSI_RESET);
                     }
+                }
+                // Check if contains Animal instance
+                else if (caseElement.content != null) {
+                    System.out.print(caseElement.backgroundColor + caseElement.content.getSymbol() + ANSI_RESET);
                 } else {
                     System.out.print(caseElement.backgroundColor + caseElement.getSymbol() + ANSI_RESET);
                 }
@@ -272,31 +273,32 @@ public class Board {
 
     /**
      * initialise the board with the chosen number of animal instances.
-     * @param numberOfAnimalsToCreate, set the number of animals which will be created for each species.
      *
+     * @param numberOfAnimalsToCreate, set the number of animals which will be created for each species.
      */
-    public void generateAnimalsOnTheBoard(int numberOfAnimalsToCreate){
-        int numberOfAnimalsAlreadyCreated=0;
+    public void placeAnimals(int numberOfAnimalsToCreate) {
+        int numberOfAnimalsAlreadyCreated = 0;
         Lion newLion;
         Giraffe newGiraffe;
         Crocodile newCrocodile;
         Hippopotamus newHippopotamus;
-        for (int x=0; x<3;x++){
-            for (int y=0; y<3;y++){ // those loops in order to browse the nine cases of the safe-zone.
-                if(x !=0 || y !=0){ // in order to avoid putting an element on the master
+
+        for (int x = 0; x < SAFEZONESIZE; x++) {
+            for (int y = 0; y < SAFEZONESIZE; y++) { // those loops in order to browse the nine cases of the safe-zone.
+                if (!this.getCaseAt(x, y).isBusy()) { // in order to avoid putting an element on the master
                     newLion = new Lion(); // at each new loop we add one animal of each species on the board.
                     newGiraffe = new Giraffe();
                     newCrocodile = new Crocodile();
                     newHippopotamus = new Hippopotamus();
-                    this.getCaseAt(1+x ,1+y).content= newLion;
-                    this.getCaseAt(1+x,LIMIT -1-y).content=newGiraffe;
-                    this.getCaseAt(LIMIT - 1-x,LIMIT - 1-y).content=newHippopotamus;
-                    this.getCaseAt(LIMIT - 1-x,1+y).content=newCrocodile;
-                    numberOfAnimalsAlreadyCreated +=1;
-                    if(numberOfAnimalsAlreadyCreated==numberOfAnimalsToCreate){
+                    this.getCaseAt(1 + x, 1 + y).content = newLion;
+                    this.getCaseAt(1 + x, LIMIT - 1 - y).content = newGiraffe;
+                    this.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content = newHippopotamus;
+                    this.getCaseAt(LIMIT - 1 - x, 1 + y).content = newCrocodile;
+                    numberOfAnimalsAlreadyCreated += 1;
+                    if (numberOfAnimalsAlreadyCreated == numberOfAnimalsToCreate) {
                         return;
                     }
-                    }
+                }
             }
         }
     }
