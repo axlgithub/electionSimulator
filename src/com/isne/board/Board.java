@@ -51,8 +51,8 @@ public class Board {
             int y = new Random().nextInt(30);
 
             // not busy and not water and not safezone
-            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone") {
-                this.grid[x][y] = new Bush();
+            if (!this.getCaseAt(x,y).isBusy() && this.getCaseAt(x,y).getType() != "Water" && this.getCaseAt(x,y).getType() != "SafeZone") {
+                this.grid[LIMIT-1-x][y] = new Bush();
                 bushCount++;
             }
         }
@@ -63,8 +63,8 @@ public class Board {
             int y = new Random().nextInt(30);
 
             // not busy and not water and not safezone
-            if (!this.grid[x][y].isBusy() && this.grid[x][y].getType() != "Water" && this.grid[x][y].getType() != "SafeZone") {
-                this.grid[x][y] = new Tree();
+            if (!this.getCaseAt(x,y).isBusy() && this.getCaseAt(x,y).getType() != "Water" && this.getCaseAt(x,y).getType() != "SafeZone") {
+                this.grid[LIMIT-1-x][y] = new Tree();
                 treeCount++;
             }
         }
@@ -89,7 +89,7 @@ public class Board {
                 caseElement = new Ground();
                 caseElement.setPosX(x);
                 caseElement.setPosY(y);
-                this.grid[x][y] = caseElement;
+                this.grid[LIMIT-1-x][y] = caseElement;
                 y++;
             }
             y = 0;
@@ -111,7 +111,7 @@ public class Board {
                         caseElement = new Water();
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[x][y] = caseElement;
+                        this.grid[LIMIT-1-x][y] = caseElement;
                     }
                     y++;
                 }
@@ -126,24 +126,24 @@ public class Board {
      */
     private void placeMasters() {
         MasterLion MLion = MasterLion.getInstance();
-        this.grid[0][0].setBusy(true);
-        this.grid[0][0].master = MLion;
-        MLion.house = this.grid[1][1];
+        this.getCaseAt(0,0).setBusy(true);
+        this.getCaseAt(0,0).master = MLion;
+        MLion.house = this.getCaseAt(0,0);
 
         MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
-        this.grid[LIMIT - 1][0].setBusy(true);
-        this.grid[LIMIT - 1][0].master = MCrocodile;
-        MCrocodile.house = this.grid[LIMIT - 1][1];
+        this.getCaseAt(LIMIT-1,0).setBusy(true);
+        this.getCaseAt(LIMIT-1,0).master = MCrocodile;
+        MCrocodile.house = this.getCaseAt(LIMIT-1,0);
 
         MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
-        this.grid[0][LIMIT - 1].setBusy(true);
-        this.grid[0][LIMIT - 1].master = MGiraffe;
-        MGiraffe.house = this.grid[1][LIMIT - 1];
+        this.getCaseAt(0,LIMIT-1).setBusy(true);
+        this.getCaseAt(0,LIMIT-1).master = MGiraffe;
+        MGiraffe.house = this.getCaseAt(0,LIMIT-1);
 
         MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
-        this.grid[LIMIT - 1][LIMIT - 1].setBusy(true);
-        this.grid[LIMIT - 1][LIMIT - 1].master = MHippopotamus;
-        MHippopotamus.house = this.grid[LIMIT - 1][LIMIT - 1];
+        this.getCaseAt(LIMIT-1,LIMIT-1).setBusy(true);
+        this.getCaseAt(LIMIT-1,LIMIT-1).master = MHippopotamus;
+        MHippopotamus.house = this.getCaseAt(LIMIT-1,LIMIT-1);
     }
 
     /**
@@ -160,7 +160,7 @@ public class Board {
                         caseElement = new SafeZone("Lion");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[x][y] = caseElement;
+                        this.grid[LIMIT-1-x][y] = caseElement;
                     }
 
                     // Top right
@@ -168,7 +168,7 @@ public class Board {
                         caseElement = new SafeZone("Giraffe");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[x][y] = caseElement;
+                        this.grid[LIMIT-1-x][y] = caseElement;
                     }
                     y++;
                 }
@@ -181,7 +181,7 @@ public class Board {
                         caseElement = new SafeZone("Crocodile");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[x][y] = caseElement;
+                        this.grid[LIMIT-1-x][y] = caseElement;
                     }
 
                     // Bottom right
@@ -189,7 +189,7 @@ public class Board {
                         caseElement = new SafeZone("Hippopotamus");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[x][y] = caseElement;
+                        this.grid[LIMIT-1-x][y] = caseElement;
                     }
                     y++;
                 }
@@ -208,7 +208,7 @@ public class Board {
      * @return
      */
     public Case getCaseAt(int x, int y) {
-        return (this.grid[x][y]);
+        return (this.grid[LIMIT-1-x][y]);
     }
 
     /**
@@ -222,7 +222,7 @@ public class Board {
                     animal = this.getCaseAt(x, y).content;
                     animal.setHunger(animal.getHunger() - 1);
                     if (animal.getHunger() == 0) {
-                        this.grid[x][y].content = null;
+                        this.getCaseAt(x,y).content = null;
                     }
                 }
             }
