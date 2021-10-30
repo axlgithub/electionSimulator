@@ -298,10 +298,10 @@ public class Board {
                     newGiraffe = new Giraffe();
                     newCrocodile = new Crocodile();
                     newHippopotamus = new Hippopotamus();
-                    this.getCaseAt(1 + x, 1 + y).content = newLion;
-                    this.getCaseAt(1 + x, LIMIT - 1 - y).content = newGiraffe;
+                    this.getCaseAt(x, y).content = newLion;
+                    this.getCaseAt(x, LIMIT - 1 - y).content = newGiraffe;
                     this.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content = newHippopotamus;
-                    this.getCaseAt(LIMIT - 1 - x, 1 + y).content = newCrocodile;
+                    this.getCaseAt(LIMIT - 1 - x,  y).content = newCrocodile;
                     numberOfAnimalsAlreadyCreated += 1;
                     if (numberOfAnimalsAlreadyCreated == numberOfAnimalsToCreate) {
                         return;
