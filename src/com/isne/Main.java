@@ -14,6 +14,8 @@ public class Main {
         // Game generation
         Board newBoard = new Board();
         newBoard.placeAnimals(ANIMALS);
+        System.out.println(newBoard.getCaseAt(28,1).content.getSpecies());
+        newBoard.getCaseAt(28,1).content.move(newBoard);
 
         //newBoard.startGame();
 

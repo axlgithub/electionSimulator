@@ -216,7 +216,7 @@ public class Board {
      * @return
      */
     public Case getCaseAt(int x, int y) {
-        return (this.grid[LIMIT - 1 - x][y]);
+        return (this.grid[LIMIT - 1 - y][x]);
     }
 
     /**
@@ -295,9 +295,17 @@ public class Board {
             for (int y = 0; y < SAFEZONESIZE; y++) { // those loops in order to browse the nine cases of the safe-zone.
                 if (!this.getCaseAt(x, y).isBusy()) { // in order to avoid putting an element on the master
                     newLion = new Lion(); // at each new loop we add one animal of each species on the board.
+                    newLion.setPositionX(x);
+                    newLion.setPositionY(y);
                     newGiraffe = new Giraffe();
+                    newGiraffe.setPositionX(x);
+                    newGiraffe.setPositionY(y);
                     newCrocodile = new Crocodile();
+                    newCrocodile.setPositionX(x);
+                    newCrocodile.setPositionY(y);
                     newHippopotamus = new Hippopotamus();
+                    newHippopotamus.setPositionX(x);
+                    newHippopotamus.setPositionY(y);
                     this.getCaseAt(x, y).content = newLion;
                     this.getCaseAt(x, LIMIT - 1 - y).content = newGiraffe;
                     this.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content = newHippopotamus;

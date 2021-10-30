@@ -22,6 +22,9 @@ public abstract class Animal {
 
     public void move(Board board) {
         Case closestFood = this.findClosestFood(board);
+        System.out.println("the closest food is at: ");
+        System.out.println(closestFood.getPosX());
+        System.out.println(closestFood.getPosY());
         positionX = this.getPositionX();
         positionY = this.getPositionY();
         int destinationX = closestFood.getPosX();
@@ -51,11 +54,15 @@ public abstract class Animal {
         Case wantedCase = board.getCaseAt(PositionX + direction, PositionY);
         if (wantedCase.getType() == "Ground" && wantedCase.content == null && direction != 0) {
             wantedCase.content = this;
+            this.setPositionX(PositionX + direction);
+            this.setPositionY(PositionY);
             currentCase.content = null;
             return true;
         }
         if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null && direction != 0) {
             wantedCase.content = this;
+            this.setPositionX(PositionX + direction);
+            this.setPositionY(PositionY);
             currentCase.content = null;
             return true;
         }
@@ -76,10 +83,14 @@ public abstract class Animal {
         Case currentCase = board.getCaseAt(PositionX, PositionY);
         if (wantedCase.getType() == "Ground" && wantedCase.content == null && direction != 0) {
             wantedCase.content = this;
+            this.setPositionX(PositionX);
+            this.setPositionY(PositionY + direction);
             currentCase.content = null;
         }
         if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null && direction != 0) {
             wantedCase.content = this;
+            this.setPositionX(PositionX);
+            this.setPositionY(PositionY + direction);
             currentCase.content = null;
         }
     }
@@ -100,8 +111,13 @@ public abstract class Animal {
      * @return
      */
     public Case findClosestFood(Board board) {
+        System.out.println("je suis une:");
+        System.out.println(this.getSpecies());
+        System.out.println("ma position est: ");
         int maPositionX = this.getPositionX();
+        System.out.println(maPositionX);
         int maPositionY = this.getPositionY();
+        System.out.println(maPositionY);
         double distanceMin = LIMIT*2;
         int closestX = LIMIT;
         int closestY = LIMIT;
