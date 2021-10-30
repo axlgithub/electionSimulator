@@ -6,10 +6,12 @@ import com.isne.master.MasterGiraffe;
 import com.isne.master.MasterHippopotamus;
 import com.isne.master.MasterLion;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
 import java.util.Random;
 
-import static com.isne.Main.LIMIT;
-import static com.isne.Main.SAFEZONESIZE;
+import static com.isne.Main.*;
 
 /**
  * Default constructor, expensive in ressources
@@ -34,6 +36,14 @@ public class Board {
         placeMasters();
         placePlants();
 
+    }
+
+    /**
+     * Clear console, only works on execution (not in IDE)
+     */
+    private static void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     /**
@@ -301,5 +311,55 @@ public class Board {
         }
     }
 
+    /**
+     * Each turn, breeds move one by one and board is displayed
+     */
+    public void startGame() {
+        ArrayList<String> turnOrderList = new ArrayList<>();
+        turnOrderList.add("Lion");
+        turnOrderList.add("Crocodile");
+        turnOrderList.add("Hippopotamus");
+        turnOrderList.add("Giraffe");
 
+        while (true) {
+            // Shuffle order
+            Collections.shuffle(turnOrderList);
+            for (String breed : turnOrderList) {
+                if (Objects.equals(breed, "Lion")) {
+
+                }
+
+                if (Objects.equals(breed, "Lion")) {
+
+                }
+
+                if (Objects.equals(breed, "Lion")) {
+
+                }
+
+                if (Objects.equals(breed, "Lion")) {
+
+                }
+                // Display
+                clearConsole();
+                this.show();
+                try {
+                    Thread.sleep(SPEED);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // End of turn
+            this.manageHunger();
+            // generate plants if eaten
+            clearConsole();
+            this.show();
+            try {
+                Thread.sleep(SPEED);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
