@@ -17,8 +17,6 @@ import static com.isne.Main.SAFEZONESIZE;
 public class Board {
     public static final String ANSI_RESET = "\u001B[0m";
     public final Case[][] grid;
-    public int sizeX;
-    public int sizeY;
 
     /**
      * Constructor for Board initialization
@@ -51,8 +49,8 @@ public class Board {
             int y = new Random().nextInt(30);
 
             // not busy and not water and not safezone
-            if (!this.getCaseAt(x,y).isBusy() && this.getCaseAt(x,y).getType() != "Water" && this.getCaseAt(x,y).getType() != "SafeZone") {
-                this.grid[LIMIT-1-x][y] = new Bush();
+            if (!this.getCaseAt(x, y).isBusy() && this.getCaseAt(x, y).getType() != "Water" && this.getCaseAt(x, y).getType() != "SafeZone") {
+                this.grid[LIMIT - 1 - x][y] = new Bush();
                 bushCount++;
             }
         }
@@ -63,8 +61,8 @@ public class Board {
             int y = new Random().nextInt(30);
 
             // not busy and not water and not safezone
-            if (!this.getCaseAt(x,y).isBusy() && this.getCaseAt(x,y).getType() != "Water" && this.getCaseAt(x,y).getType() != "SafeZone") {
-                this.grid[LIMIT-1-x][y] = new Tree();
+            if (!this.getCaseAt(x, y).isBusy() && this.getCaseAt(x, y).getType() != "Water" && this.getCaseAt(x, y).getType() != "SafeZone") {
+                this.grid[LIMIT - 1 - x][y] = new Tree();
                 treeCount++;
             }
         }
@@ -89,7 +87,7 @@ public class Board {
                 caseElement = new Ground();
                 caseElement.setPosX(x);
                 caseElement.setPosY(y);
-                this.grid[LIMIT-1-x][y] = caseElement;
+                this.grid[LIMIT - 1 - x][y] = caseElement;
                 y++;
             }
             y = 0;
@@ -111,7 +109,7 @@ public class Board {
                         caseElement = new Water();
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[LIMIT-1-x][y] = caseElement;
+                        this.grid[LIMIT - 1 - x][y] = caseElement;
                     }
                     y++;
                 }
@@ -126,24 +124,24 @@ public class Board {
      */
     private void placeMasters() {
         MasterLion MLion = MasterLion.getInstance();
-        this.getCaseAt(0,0).setBusy(true);
-        this.getCaseAt(0,0).master = MLion;
-        MLion.house = this.getCaseAt(0,0);
+        this.getCaseAt(0, 0).setBusy(true);
+        this.getCaseAt(0, 0).master = MLion;
+        MLion.house = this.getCaseAt(0, 0);
 
         MasterCrocodile MCrocodile = MasterCrocodile.getInstance();
-        this.getCaseAt(LIMIT-1,0).setBusy(true);
-        this.getCaseAt(LIMIT-1,0).master = MCrocodile;
-        MCrocodile.house = this.getCaseAt(LIMIT-1,0);
+        this.getCaseAt(LIMIT - 1, 0).setBusy(true);
+        this.getCaseAt(LIMIT - 1, 0).master = MCrocodile;
+        MCrocodile.house = this.getCaseAt(LIMIT - 1, 0);
 
         MasterGiraffe MGiraffe = MasterGiraffe.getInstance();
-        this.getCaseAt(0,LIMIT-1).setBusy(true);
-        this.getCaseAt(0,LIMIT-1).master = MGiraffe;
-        MGiraffe.house = this.getCaseAt(0,LIMIT-1);
+        this.getCaseAt(0, LIMIT - 1).setBusy(true);
+        this.getCaseAt(0, LIMIT - 1).master = MGiraffe;
+        MGiraffe.house = this.getCaseAt(0, LIMIT - 1);
 
         MasterHippopotamus MHippopotamus = MasterHippopotamus.getInstance();
-        this.getCaseAt(LIMIT-1,LIMIT-1).setBusy(true);
-        this.getCaseAt(LIMIT-1,LIMIT-1).master = MHippopotamus;
-        MHippopotamus.house = this.getCaseAt(LIMIT-1,LIMIT-1);
+        this.getCaseAt(LIMIT - 1, LIMIT - 1).setBusy(true);
+        this.getCaseAt(LIMIT - 1, LIMIT - 1).master = MHippopotamus;
+        MHippopotamus.house = this.getCaseAt(LIMIT - 1, LIMIT - 1);
     }
 
     /**
@@ -160,7 +158,7 @@ public class Board {
                         caseElement = new SafeZone("Lion");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[LIMIT-1-x][y] = caseElement;
+                        this.grid[LIMIT - 1 - x][y] = caseElement;
                     }
 
                     // Top right
@@ -168,7 +166,7 @@ public class Board {
                         caseElement = new SafeZone("Giraffe");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[LIMIT-1-x][y] = caseElement;
+                        this.grid[LIMIT - 1 - x][y] = caseElement;
                     }
                     y++;
                 }
@@ -181,7 +179,7 @@ public class Board {
                         caseElement = new SafeZone("Crocodile");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[LIMIT-1-x][y] = caseElement;
+                        this.grid[LIMIT - 1 - x][y] = caseElement;
                     }
 
                     // Bottom right
@@ -189,7 +187,7 @@ public class Board {
                         caseElement = new SafeZone("Hippopotamus");
                         caseElement.setPosX(x);
                         caseElement.setPosY(y);
-                        this.grid[LIMIT-1-x][y] = caseElement;
+                        this.grid[LIMIT - 1 - x][y] = caseElement;
                     }
                     y++;
                 }
@@ -208,7 +206,7 @@ public class Board {
      * @return
      */
     public Case getCaseAt(int x, int y) {
-        return (this.grid[LIMIT-1-x][y]);
+        return (this.grid[LIMIT - 1 - x][y]);
     }
 
     /**
@@ -216,13 +214,13 @@ public class Board {
      */
     public void manageHunger() {
         Animal animal;
-        for (int x = 0; x < this.sizeX; x++) {
-            for (int y = 0; y < this.sizeY; y++) {
+        for (int x = 0; x < LIMIT; x++) {
+            for (int y = 0; y < LIMIT; y++) {
                 if (this.getCaseAt(x, y).content != null) {
                     animal = this.getCaseAt(x, y).content;
                     animal.setHunger(animal.getHunger() - 1);
                     if (animal.getHunger() == 0) {
-                        this.getCaseAt(x,y).content = null;
+                        this.getCaseAt(x, y).content = null;
                     }
                 }
             }

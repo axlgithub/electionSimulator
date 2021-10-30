@@ -5,6 +5,8 @@ import com.isne.board.Case;
 
 import java.util.UUID;
 
+import static com.isne.Main.LIMIT;
+
 public abstract class Animal {
     private int life;
     private int strength;
@@ -92,15 +94,20 @@ public abstract class Animal {
     }
 
 
+    /**
+     * Return Case from closest prey
+     * @param board
+     * @return
+     */
     public Case findClosestFood(Board board) {
         int maPositionX = this.getPositionX();
         int maPositionY = this.getPositionY();
-        double distanceMin = board.sizeX + board.sizeY;
-        int closestX = board.sizeX;
-        int closestY = board.sizeY;
-        Case caseMin = new Case();
-        for (int x = 0; x < board.sizeX; x++) {
-            for (int y = 0; y < board.sizeY; y++) {
+        double distanceMin = LIMIT*2;
+        int closestX = LIMIT;
+        int closestY = LIMIT;
+
+        for (int x = 0; x < LIMIT; x++) {
+            for (int y = 0; y < LIMIT; y++) {
                 if (distance(maPositionX, maPositionY, x, y) < distanceMin) {
                     if (this.condition(board, x, y)) {
                         distanceMin = (maPositionX - x) + (maPositionY - y);
@@ -117,9 +124,7 @@ public abstract class Animal {
 
     /* Getters and setters   */
 
-    public String getSymbol() {
-        return Symbol;
-    }
+    public String getSymbol() {return Symbol;}
 
     public void setSymbol(String symbol) {
         Symbol = symbol;
