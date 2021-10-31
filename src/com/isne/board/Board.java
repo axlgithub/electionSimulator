@@ -295,21 +295,21 @@ public class Board {
             for (int y = 0; y < SAFEZONESIZE; y++) { // those loops in order to browse the nine cases of the safe-zone.
                 if (!this.getCaseAt(x, y).isBusy()) { // in order to avoid putting an element on the master
                     newLion = new Lion(); // at each new loop we add one animal of each species on the board.
+                    newGiraffe = new Giraffe();
+                    newCrocodile = new Crocodile();
+                    newHippopotamus = new Hippopotamus();
+                    this.getCaseAt(x, y).content = newLion;
                     newLion.setPositionX(x);
                     newLion.setPositionY(y);
-                    newGiraffe = new Giraffe();
-                    newGiraffe.setPositionX(x);
-                    newGiraffe.setPositionY(y);
-                    newCrocodile = new Crocodile();
-                    newCrocodile.setPositionX(x);
-                    newCrocodile.setPositionY(y);
-                    newHippopotamus = new Hippopotamus();
-                    newHippopotamus.setPositionX(x);
-                    newHippopotamus.setPositionY(y);
-                    this.getCaseAt(x, y).content = newLion;
                     this.getCaseAt(x, LIMIT - 1 - y).content = newGiraffe;
+                    newGiraffe.setPositionX(x);
+                    newGiraffe.setPositionY(LIMIT - 1 - y);
                     this.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content = newHippopotamus;
+                    newHippopotamus.setPositionX(LIMIT - 1 - x);
+                    newHippopotamus.setPositionY(LIMIT - 1 - y);
                     this.getCaseAt(LIMIT - 1 - x,  y).content = newCrocodile;
+                    newCrocodile.setPositionX(LIMIT - 1 - x);
+                    newCrocodile.setPositionY(y);
                     numberOfAnimalsAlreadyCreated += 1;
                     if (numberOfAnimalsAlreadyCreated == numberOfAnimalsToCreate) {
                         return;

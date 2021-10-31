@@ -2,6 +2,7 @@ package com.isne.animals;
 
 import com.isne.board.Board;
 import com.isne.board.Case;
+import java.util.Arrays;
 
 import java.util.UUID;
 
@@ -21,14 +22,14 @@ public abstract class Animal {
 
 
     public void move(Board board) {
-        Case closestFood = this.findClosestFood(board);
+        int[] closestFoodCoordinates = this.findClosestFood(board);
         System.out.println("the closest food is at: ");
-        System.out.println(closestFood.getPosX());
-        System.out.println(closestFood.getPosY());
+        System.out.println(closestFoodCoordinates[0]);
+        System.out.println(closestFoodCoordinates[1]);
         positionX = this.getPositionX();
         positionY = this.getPositionY();
-        int destinationX = closestFood.getPosX();
-        int destinationY = closestFood.getPosY();
+        int destinationX = closestFoodCoordinates[0];
+        int destinationY = closestFoodCoordinates[1];
         int directionX;
         int directionY;
         for (int i = 0; i <= this.getSpeedOnGround(); i++) {
@@ -110,10 +111,7 @@ public abstract class Animal {
      * @param board
      * @return
      */
-    public Case findClosestFood(Board board) {
-        System.out.println("je suis une:");
-        System.out.println(this.getSpecies());
-        System.out.println("ma position est: ");
+    public int[] findClosestFood(Board board) {
         int maPositionX = this.getPositionX();
         System.out.println(maPositionX);
         int maPositionY = this.getPositionY();
@@ -121,19 +119,22 @@ public abstract class Animal {
         double distanceMin = LIMIT*2;
         int closestX = LIMIT;
         int closestY = LIMIT;
-
         for (int x = 0; x < LIMIT; x++) {
             for (int y = 0; y < LIMIT; y++) {
                 if (distance(maPositionX, maPositionY, x, y) < distanceMin) {
                     if (this.condition(board, x, y)) {
-                        distanceMin = (maPositionX - x) + (maPositionY - y);
+                        System.out.println("okok");
+                        System.out.println(x);
+                        System.out.println(y);
+                        distanceMin = distance(maPositionX, maPositionY, x, y);
                         closestX = x;
                         closestY = y;
                     }
                 }
             }
         }
-        return board.getCaseAt(closestX, closestY);
+        int[] arr={closestX,closestY};
+        return arr;
     }
 
     protected abstract boolean condition(Board board, int x, int y);
