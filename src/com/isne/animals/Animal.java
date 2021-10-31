@@ -34,7 +34,18 @@ public abstract class Animal {
             directionX = this.findDirection(destinationX, positionX);
             directionY = this.findDirection(destinationY, positionY);
             if (!this.moveFromOneTileX(board, positionX, positionY, directionX)) {
-                this.moveFromOneTileY(board, positionX, positionY, directionY);
+                if(!this.moveFromOneTileY(board, positionX, positionY, directionY)){
+                    //if the animal didn't move in x or in y then he is stuck, the functions bellow are here to make it move
+                    if(destinationX-positionX != 0 ){ // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
+                        this.moveFromOneTileWhenStuckY(board, positionX, positionY);
+                        this.setHasAlreadyMoved(true);
+                    }
+                    else{ // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
+                        if(destinationY-positionY != 0) {
+                            this.moveFromOneTileWhenStuckX(board, positionX, positionY);
+                        }
+                    }
+                }
             }
         }
         this.setHasAlreadyMoved(true);
@@ -66,7 +77,56 @@ public abstract class Animal {
             currentCase.content = null;
             return true;
         }
+
         return false;
+    }
+
+    public void moveFromOneTileWhenStuckX(Board board, int PositionX, int PositionY) {
+        Case currentCase = board.getCaseAt(PositionX, PositionY);
+        int direction = 1;
+        if (PositionX+1==LIMIT){
+            direction=-1;
+        }
+        Case wantedCase = board.getCaseAt(PositionX + direction, PositionY);
+        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null) {
+            wantedCase.content = this;
+            this.setPositionX(PositionX + direction);
+            this.setPositionY(PositionY);
+            currentCase.content = null;
+            return;
+        }
+        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null) {
+            wantedCase.content = this;
+            this.setPositionX(PositionX + direction);
+            this.setPositionY(PositionY);
+            currentCase.content = null;
+            return;
+        }
+        return;
+    }
+
+    public void moveFromOneTileWhenStuckY(Board board, int PositionX, int PositionY) {
+        Case currentCase = board.getCaseAt(PositionX, PositionY);
+        int direction = 1;
+        if (PositionY+1==LIMIT){
+            direction=-1;
+        }
+        Case wantedCase = board.getCaseAt(PositionX , PositionY+ direction);
+        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null) {
+            wantedCase.content = this;
+            this.setPositionX(PositionX + direction);
+            this.setPositionY(PositionY);
+            currentCase.content = null;
+            return;
+        }
+        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null) {
+            wantedCase.content = this;
+            this.setPositionX(PositionX + direction);
+            this.setPositionY(PositionY);
+            currentCase.content = null;
+            return;
+        }
+        return;
     }
 
     /**
@@ -78,7 +138,7 @@ public abstract class Animal {
      * @param direction
      * @return
      */
-    public void moveFromOneTileY(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
+    public boolean moveFromOneTileY(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
         Case wantedCase = board.getCaseAt(PositionX, PositionY + direction);
         Case currentCase = board.getCaseAt(PositionX, PositionY);
         if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null && direction != 0) {
@@ -86,13 +146,16 @@ public abstract class Animal {
             this.setPositionX(PositionX);
             this.setPositionY(PositionY + direction);
             currentCase.content = null;
+            return true;
         }
         if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null && direction != 0) {
             wantedCase.content = this;
             this.setPositionX(PositionX);
             this.setPositionY(PositionY + direction);
             currentCase.content = null;
+            return true;
         }
+        return false;
     }
 
     public int findDirection(int destination, int position) {
