@@ -34,21 +34,24 @@ public abstract class Animal {
             directionX = this.findDirection(destinationX, positionX);
             directionY = this.findDirection(destinationY, positionY);
             if (!this.moveFromOneTileX(board, positionX, positionY, directionX)) {
-                if(!this.moveFromOneTileY(board, positionX, positionY, directionY)){
+                if (!this.moveFromOneTileY(board, positionX, positionY, directionY)) {
                     //if the animal didn't move in x or in y then he is stuck, the functions bellow are here to make it move
-                    if(destinationX-positionX != 0 ){ // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
-                        this.moveFromOneTileWhenStuckY(board, positionX, positionY);
-                        this.setHasAlreadyMoved(true);
-                    }
-                    else{ // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
-                        if(destinationY-positionY != 0) {
-                            this.moveFromOneTileWhenStuckX(board, positionX, positionY);
+                    if (destinationX - positionX != 0) { // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
+                        if (!this.moveFromOneTileWhenStuckY(board, positionX, positionY, 1)) {
+                            this.moveFromOneTileWhenStuckY(board, positionX, positionY, -1);
+                        }
+                    } else { // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
+                        if (destinationY - positionY != 0) {
+                            if (!this.moveFromOneTileWhenStuckX(board, positionX, positionY, 1)) {
+                                this.moveFromOneTileWhenStuckX(board, positionX, positionY, -1);
+                            }
                         }
                     }
                 }
             }
         }
         this.setHasAlreadyMoved(true);
+
     }
 
     /**
@@ -81,11 +84,10 @@ public abstract class Animal {
         return false;
     }
 
-    public void moveFromOneTileWhenStuckX(Board board, int PositionX, int PositionY) {
+    public boolean moveFromOneTileWhenStuckX(Board board, int PositionX, int PositionY,int direction) {
         Case currentCase = board.getCaseAt(PositionX, PositionY);
-        int direction = 1;
-        if (PositionX+1==LIMIT){
-            direction=-1;
+        if (PositionX+direction ==LIMIT || PositionX+direction<0){
+            return false;
         }
         Case wantedCase = board.getCaseAt(PositionX + direction, PositionY);
         if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null) {
@@ -93,40 +95,39 @@ public abstract class Animal {
             this.setPositionX(PositionX + direction);
             this.setPositionY(PositionY);
             currentCase.content = null;
-            return;
+            return true;
         }
         if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null) {
             wantedCase.content = this;
             this.setPositionX(PositionX + direction);
             this.setPositionY(PositionY);
             currentCase.content = null;
-            return;
+            return true;
         }
-        return;
+        return false;
     }
 
-    public void moveFromOneTileWhenStuckY(Board board, int PositionX, int PositionY) {
+    public boolean moveFromOneTileWhenStuckY(Board board, int PositionX, int PositionY,int direction) {
         Case currentCase = board.getCaseAt(PositionX, PositionY);
-        int direction = 1;
-        if (PositionY+1==LIMIT){
-            direction=-1;
+        if (PositionY+direction==LIMIT || PositionY+direction<0 ){
+            return false;
         }
         Case wantedCase = board.getCaseAt(PositionX , PositionY+ direction);
         if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null) {
             wantedCase.content = this;
-            this.setPositionX(PositionX + direction);
-            this.setPositionY(PositionY);
+            this.setPositionX(PositionX );
+            this.setPositionY(PositionY+ direction);
             currentCase.content = null;
-            return;
+            return true;
         }
         if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null) {
             wantedCase.content = this;
-            this.setPositionX(PositionX + direction);
-            this.setPositionY(PositionY);
+            this.setPositionX(PositionX );
+            this.setPositionY(PositionY+ direction);
             currentCase.content = null;
-            return;
+            return true;
         }
-        return;
+        return false;
     }
 
     /**
