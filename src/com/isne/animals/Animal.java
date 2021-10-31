@@ -23,7 +23,6 @@ public abstract class Animal {
 
 
     public void move(Board board) {
-        if(this.getHasAlreadyMoved()){return;};
         int[] closestFoodCoordinates = this.findClosestFood(board);
         positionX = this.getPositionX();
         positionY = this.getPositionY();
@@ -53,7 +52,7 @@ public abstract class Animal {
     public boolean moveFromOneTileX(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
         Case currentCase = board.getCaseAt(PositionX, PositionY);
         Case wantedCase = board.getCaseAt(PositionX + direction, PositionY);
-        if (wantedCase.getType() == "Ground" && wantedCase.content == null && direction != 0) {
+        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null && direction != 0) {
             wantedCase.content = this;
             this.setPositionX(PositionX + direction);
             this.setPositionY(PositionY);
@@ -82,7 +81,7 @@ public abstract class Animal {
     public void moveFromOneTileY(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
         Case wantedCase = board.getCaseAt(PositionX, PositionY + direction);
         Case currentCase = board.getCaseAt(PositionX, PositionY);
-        if (wantedCase.getType() == "Ground" && wantedCase.content == null && direction != 0) {
+        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null && direction != 0) {
             wantedCase.content = this;
             this.setPositionX(PositionX);
             this.setPositionY(PositionY + direction);
