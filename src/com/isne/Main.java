@@ -14,7 +14,14 @@ public class Main {
         // Game generation
         Board newBoard = new Board();
         newBoard.placeAnimals(ANIMALS);
-        newBoard.getCaseAt(1,27).content.move(newBoard);
+        System.out.println(newBoard.getCaseAt(0,28).content.getSpecies());
+        for(int i=0; i<10;i++) {
+            newBoard.makeASpeciesMove("Giraffe");
+            newBoard.makeASpeciesMove("Hippopotamus");
+            newBoard.makeASpeciesMove("Lion");
+            newBoard.makeASpeciesMove("Crocodile");
+        }
+
 
         //newBoard.startGame();
 

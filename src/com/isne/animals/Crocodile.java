@@ -12,7 +12,6 @@ public class Crocodile extends Carnivorous {
         this.setLife(50);
         this.setStrength(10);
         this.setSpeedOnGround(3);
-        this.setSpeedOnWatter(3);
         this.setSpecies("Crocodile");
         this.setSymbol(Symbol);
     }

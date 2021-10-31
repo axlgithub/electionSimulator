@@ -8,6 +8,7 @@ public class Giraffe extends Herbivorous {
     public Giraffe() {
         this.setSpecies("Giraffe");
         this.setSymbol(Symbol);
+        this.setSpeedOnGround(3);
     }
 
     public boolean condition(Board board, int x, int y) {

@@ -2,7 +2,6 @@ package com.isne.animals;
 
 import com.isne.board.Board;
 import com.isne.board.Case;
-import java.util.Arrays;
 
 import java.util.UUID;
 
@@ -19,26 +18,27 @@ public abstract class Animal {
     private int positionX;
     private int positionY;
     private String Symbol;
+    private boolean hasAlreadyMoved;
+
 
 
     public void move(Board board) {
+        if(this.getHasAlreadyMoved()){return;};
         int[] closestFoodCoordinates = this.findClosestFood(board);
-        System.out.println("the closest food is at: ");
-        System.out.println(closestFoodCoordinates[0]);
-        System.out.println(closestFoodCoordinates[1]);
         positionX = this.getPositionX();
         positionY = this.getPositionY();
         int destinationX = closestFoodCoordinates[0];
         int destinationY = closestFoodCoordinates[1];
         int directionX;
         int directionY;
-        for (int i = 0; i <= this.getSpeedOnGround(); i++) {
+        for (int i = 0; i < this.getSpeedOnGround(); i++) {
             directionX = this.findDirection(destinationX, positionX);
             directionY = this.findDirection(destinationY, positionY);
             if (!this.moveFromOneTileX(board, positionX, positionY, directionX)) {
                 this.moveFromOneTileY(board, positionX, positionY, directionY);
             }
         }
+        this.setHasAlreadyMoved(true);
     }
 
     /**
@@ -113,9 +113,7 @@ public abstract class Animal {
      */
     public int[] findClosestFood(Board board) {
         int maPositionX = this.getPositionX();
-        System.out.println(maPositionX);
         int maPositionY = this.getPositionY();
-        System.out.println(maPositionY);
         double distanceMin = LIMIT*2;
         int closestX = LIMIT;
         int closestY = LIMIT;
@@ -123,9 +121,6 @@ public abstract class Animal {
             for (int y = 0; y < LIMIT; y++) {
                 if (distance(maPositionX, maPositionY, x, y) < distanceMin) {
                     if (this.condition(board, x, y)) {
-                        System.out.println("okok");
-                        System.out.println(x);
-                        System.out.println(y);
                         distanceMin = distance(maPositionX, maPositionY, x, y);
                         closestX = x;
                         closestY = y;
@@ -218,6 +213,15 @@ public abstract class Animal {
     public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
+
+    public boolean getHasAlreadyMoved() {
+        return hasAlreadyMoved;
+    }
+
+    public void setHasAlreadyMoved(boolean hasAlreadyMoved) {
+        this.hasAlreadyMoved = hasAlreadyMoved;
+    }
+
 }
 
 

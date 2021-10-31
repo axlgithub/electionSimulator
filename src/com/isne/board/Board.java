@@ -237,6 +237,23 @@ public class Board {
         }
     }
 
+    public void makeASpeciesMove(String aSpecies){
+        for(int x1=0; x1<LIMIT;x1++) { // first loop to say that no animal of this species has moved
+            for (int y2 = 0; y2 < LIMIT; y2++) {
+                if (this.getCaseAt(x1, y2).content != null && this.getCaseAt(x1, y2).content.getSpecies() == aSpecies) {
+                    this.getCaseAt(x1, y2).content.setHasAlreadyMoved(false);
+                }
+            }
+        }
+        for(int x=0; x<LIMIT;x++){ // loop to make the animal of the species move.
+            for(int y=0; y<LIMIT;y++){
+                if(this.getCaseAt(x,y).content != null && this.getCaseAt(x,y).content.getSpecies()== aSpecies){
+                    this.getCaseAt(x,y).content.move(this);
+                }
+            }
+        }
+    }
+
     /**
      * Show board content
      */
