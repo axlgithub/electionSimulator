@@ -10,6 +10,7 @@ public class Hippopotamus extends Herbivorous {
         this.setSpecies("Hippopotamus");
         this.setSymbol(Symbol);
         this.setSpeedOnGround(2);
+        this.setWasStuckOnY(false);
     }
 
     public boolean condition(Board board, int x, int y) {

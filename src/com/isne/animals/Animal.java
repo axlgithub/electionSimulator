@@ -19,9 +19,13 @@ public abstract class Animal {
     private int positionY;
     private String Symbol;
     private boolean hasAlreadyMoved;
+    private boolean wasStuckOnY; // if an animal is stuck on Y we need to move it on the x axis. But the next move musn't be on the x axis or it will be stuck again. This is why there is this variable.
 
 
-
+    /**
+     * This method manage all the mouvement part of an animal
+     * @param board
+     */
     public void move(Board board) {
         int[] closestFoodCoordinates = this.findClosestFood(board);
         positionX = this.getPositionX();
@@ -33,17 +37,17 @@ public abstract class Animal {
         for (int i = 0; i < this.getSpeedOnGround(); i++) {
             directionX = this.findDirection(destinationX, positionX);
             directionY = this.findDirection(destinationY, positionY);
-            if (!this.moveFromOneTileX(board, positionX, positionY, directionX)) {
-                if (!this.moveFromOneTileY(board, positionX, positionY, directionY)) {
-                    //if the animal didn't move in x or in y then he is stuck, the functions bellow are here to make it move
-                    if (destinationX - positionX != 0) { // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
-                        if (!this.moveFromOneTileWhenStuckY(board, positionX, positionY, 1)) {
-                            this.moveFromOneTileWhenStuckY(board, positionX, positionY, -1);
+            if (!this.moveFromOneTile(board, directionX,true)) { // If wadStuckOnY is true then it has to move on Y axis first.
+                this.setWasStuckOnY(false); // the animal will move on Y first we can re-initialize the variable.
+                if (!this.moveFromOneTile(board, directionY, false)) { //if the animal didn't move in x or in y then he is stuck, the functions bellow are here to make it move
+                    if (destinationX - positionX != 0) { // if the animal isn't near the food on the x axis, then it is stuck by an object near from him on the x-axis we need to make a move on the y-axis first.
+                        if (!this.moveFromOneTileWhenStuck(board, 1,true)) {
+                            this.moveFromOneTileWhenStuck(board, -1, true);
                         }
-                    } else { // if the animal isn't near the animal on the x axis, then he is stuck by an object near from him on the x axis we we need to make a move on the y axis first.
+                    } else { // it is stuck on the y axis, need to move on the y one.
                         if (destinationY - positionY != 0) {
-                            if (!this.moveFromOneTileWhenStuckX(board, positionX, positionY, 1)) {
-                                this.moveFromOneTileWhenStuckX(board, positionX, positionY, -1);
+                            if (!this.moveFromOneTileWhenStuck(board,1,false)) {
+                                this.moveFromOneTileWhenStuck(board, -1, false);
                             }
                         }
                     }
@@ -55,124 +59,108 @@ public abstract class Animal {
     }
 
     /**
-     * return true if the animal as been able to move on the x-axis, false otherwise. The direction parameter is either 1 or -1 or 0. It saids if the animal must go to the right, left of its actual position.
-     *
+     * The animal can be stuck by a tree or a bush or another animal on its path. This method is here to unlock it
      * @param board
-     * @param PositionX
-     * @param PositionY
      * @param direction
+     * @param stuckOnX
      * @return
      */
-    public boolean moveFromOneTileX(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
-        Case currentCase = board.getCaseAt(PositionX, PositionY);
-        Case wantedCase = board.getCaseAt(PositionX + direction, PositionY);
-        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null && direction != 0) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX + direction);
-            this.setPositionY(PositionY);
-            currentCase.content = null;
-            return true;
+    public boolean moveFromOneTileWhenStuck(Board board, int direction, boolean stuckOnX) {
+        int positionX = this.positionX;
+        int positionY = this.positionY;
+        Case wantedCase;
+        Case currentCase = board.getCaseAt(positionX, positionY);
+        if(stuckOnX) {
+            if (positionY + direction == LIMIT || positionY + direction < 0) { // checks if the wanted case is not outside the board.
+                return false;
+            }
+            wantedCase = board.getCaseAt(positionX , positionY+ direction); //sets the case id to unclock the animal.
         }
-        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null && direction != 0) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX + direction);
-            this.setPositionY(PositionY);
-            currentCase.content = null;
-            return true;
+        else{
+            if (positionX + direction == LIMIT || positionX + direction < 0) {
+                return false;
+            }
+            wantedCase = board.getCaseAt(positionX+ direction , positionY);
+            this.setWasStuckOnY(true);
         }
-
-        return false;
-    }
-
-    public boolean moveFromOneTileWhenStuckX(Board board, int PositionX, int PositionY,int direction) {
-        Case currentCase = board.getCaseAt(PositionX, PositionY);
-        if (PositionX+direction ==LIMIT || PositionX+direction<0){
-            return false;
-        }
-        Case wantedCase = board.getCaseAt(PositionX + direction, PositionY);
-        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX + direction);
-            this.setPositionY(PositionY);
-            currentCase.content = null;
-            return true;
-        }
-        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX + direction);
-            this.setPositionY(PositionY);
-            currentCase.content = null;
+        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone" || (wantedCase.getType() == "Water" && this.canSwim)) && wantedCase.content == null) { // si le deplacement sur la wanted case est possible
+            this.makeTheMove(wantedCase,currentCase);
             return true;
         }
         return false;
     }
 
-    public boolean moveFromOneTileWhenStuckY(Board board, int PositionX, int PositionY,int direction) {
-        Case currentCase = board.getCaseAt(PositionX, PositionY);
-        if (PositionY+direction==LIMIT || PositionY+direction<0 ){
+
+    /**
+     *
+     *
+     * @param board
+     * @param direction 1 if you want to go up or right, -1 to go down or left
+     * @param moveOnX if it is true the move will be on X axis otherwise on Y axis
+     * @return true if the animal as been able to move, false otherwise. The direction parameter is either 1 or -1 or 0. It says if the animal must go to the right, left, up down of its actual position.
+     */
+    public boolean moveFromOneTile(Board board, int direction,boolean moveOnX) {
+        if(direction==0){
             return false;
         }
-        Case wantedCase = board.getCaseAt(PositionX , PositionY+ direction);
-        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX );
-            this.setPositionY(PositionY+ direction);
-            currentCase.content = null;
-            return true;
+        int positionX = this.getPositionX();
+        int positionY = this.getPositionY();
+        Case currentCase = board.getCaseAt(positionX, positionY);
+        Case wantedCase;
+        if(moveOnX){
+            wantedCase = board.getCaseAt(positionX+direction, positionY);
+            if(this.getWasStuckOnY()){
+                return false; // the animal needs to move on y-axis first
+            }
         }
-        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX );
-            this.setPositionY(PositionY+ direction);
-            currentCase.content = null;
+        else{
+            wantedCase = board.getCaseAt(positionX, positionY + direction);
+        }
+        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone" || (wantedCase.getType() == "Water" && this.canSwim)) && wantedCase.content == null) {
+            this.makeTheMove(wantedCase,currentCase);
             return true;
         }
         return false;
     }
 
     /**
-     * return true if the animal as been able to move on the x-axis, false otherwise. The direction parameter is either 1 or -1 or 0. It saids if the animal must go to the right, left of its actual position.
-     *
-     * @param board
-     * @param PositionX
-     * @param PositionY
-     * @param direction
-     * @return
+     * Method which actually make the animal move from one tile to antoher
+     * @param wantedCase
+     * @param currentCase
      */
-    public boolean moveFromOneTileY(Board board, int PositionX, int PositionY, int direction) { //direction equals + or - 1 according to the direction you wanna go
-        Case wantedCase = board.getCaseAt(PositionX, PositionY + direction);
-        Case currentCase = board.getCaseAt(PositionX, PositionY);
-        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone") && wantedCase.content == null && direction != 0) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX);
-            this.setPositionY(PositionY + direction);
-            currentCase.content = null;
-            return true;
-        }
-        if (wantedCase.getType() == "Water" && this.canSwim && wantedCase.content == null && direction != 0) {
-            wantedCase.content = this;
-            this.setPositionX(PositionX);
-            this.setPositionY(PositionY + direction);
-            currentCase.content = null;
-            return true;
-        }
-        return false;
+    public void makeTheMove(Case wantedCase, Case currentCase){
+        wantedCase.content = this;
+        this.setPositionX(wantedCase.getPosX());
+        this.setPositionY(wantedCase.getPosY());
+        currentCase.content = null;
     }
 
+    /**
+     *
+     * @param destination
+     * @param position
+     * @return -1 if the indice of the direction is lower than the position of the animal, +1 if it is higher, 0 if it is the same
+     */
     public int findDirection(int destination, int position) {
         return Integer.compare(destination - position, 0);
     }
 
-
+    /**
+     *
+     * @param abscissa1
+     * @param ordinate1
+     * @param abscissa2
+     * @param ordinate2
+     * @return the distance in cases between two cases
+     */
     public double distance(int abscissa1, int ordinate1, int abscissa2, int ordinate2) {
         return (Math.sqrt(Math.pow((abscissa1 - abscissa2), 2) + Math.pow((ordinate1 - ordinate2), 2)));
     }
 
 
     /**
-     * Return Case from closest prey
      * @param board
-     * @return
+     * @return an array with the position X and Y of the closest food
      */
     public int[] findClosestFood(Board board) {
         int maPositionX = this.getPositionX();
@@ -276,6 +264,15 @@ public abstract class Animal {
     public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
+
+    public boolean getWasStuckOnY() {
+        return wasStuckOnY;
+    }
+
+    public void setWasStuckOnY(boolean wasStuckOnY) {
+        this.wasStuckOnY = wasStuckOnY;
+    }
+
 
     public boolean getHasAlreadyMoved() {
         return hasAlreadyMoved;

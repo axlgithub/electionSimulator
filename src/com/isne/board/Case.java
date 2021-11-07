@@ -38,15 +38,15 @@ public class Case {
     }
 
     public int getPosX() {
-        return posX;
-    }
+        return posY;
+    } //Y and not X because we inverted the coordinated to respect [x][y] and not [y][x]
 
     public void setPosX(int posX) {
         this.posX = posX;
     }
 
     public int getPosY() {
-        return posY;
+        return posX;
     }
 
     public void setPosY(int posY) {
