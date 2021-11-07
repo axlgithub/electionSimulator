@@ -248,7 +248,9 @@ public class Board {
         for(int x=0; x<LIMIT;x++){ // loop to make the animal of the species move.
             for(int y=0; y<LIMIT;y++){
                 if(this.getCaseAt(x,y).content != null && this.getCaseAt(x,y).content.getSpecies()== aSpecies && !this.getCaseAt(x,y).content.getHasAlreadyMoved()){
-                    this.getCaseAt(x,y).content.move(this);
+                    if(this.getCaseAt(x,y).content.move(this)){
+                        System.out.println("miam miam");
+                    }
                 }
             }
         }

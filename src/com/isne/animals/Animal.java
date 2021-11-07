@@ -25,18 +25,24 @@ public abstract class Animal {
     /**
      * This method manage all the mouvement part of an animal
      * @param board
+     * @return true if it is next to its food location, false otherwise
      */
-    public void move(Board board) {
+    public boolean move(Board board) {
         int[] closestFoodCoordinates = this.findClosestFood(board);
-        positionX = this.getPositionX();
-        positionY = this.getPositionY();
+        int positionX;
+        int positionY;
         int destinationX = closestFoodCoordinates[0];
         int destinationY = closestFoodCoordinates[1];
         int directionX;
         int directionY;
         for (int i = 0; i < this.getSpeedOnGround(); i++) {
+            positionX = this.getPositionX();
+            positionY = this.getPositionY();
             directionX = this.findDirection(destinationX, positionX);
             directionY = this.findDirection(destinationY, positionY);
+            if(distance(positionX,positionY,destinationX,destinationY)==1){
+                return true; //if the animal is next to its food location, no need to move anymore.
+            }
             if (!this.moveFromOneTile(board, directionX,true)) { // If wadStuckOnY is true then it has to move on Y axis first.
                 this.setWasStuckOnY(false); // the animal will move on Y first we can re-initialize the variable.
                 if (!this.moveFromOneTile(board, directionY, false)) { //if the animal didn't move in x or in y then he is stuck, the functions bellow are here to make it move
@@ -55,7 +61,7 @@ public abstract class Animal {
             }
         }
         this.setHasAlreadyMoved(true);
-
+        return false;
     }
 
     /**
