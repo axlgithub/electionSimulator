@@ -14,19 +14,11 @@ public class Main {
         // Game generation
         Board newBoard = new Board();
         newBoard.placeAnimals(ANIMALS);
-        for(int i=0; i<20;i++) {
-            newBoard.makeASpeciesMove("Giraffe");
-            newBoard.makeASpeciesMove("Hippopotamus");
-            newBoard.makeASpeciesMove("Lion");
-            newBoard.makeASpeciesMove("Crocodile");
-        }
 
-
-
-        //newBoard.startGame();
+        newBoard.startGame();
 
         // Testing only
-        newBoard.show();
+        //newBoard.show();
     }
 
 

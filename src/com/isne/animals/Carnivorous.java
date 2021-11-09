@@ -1,12 +1,8 @@
 package com.isne.animals;
 
 import com.isne.board.Board;
-import com.isne.board.Case;
 
 public class Carnivorous extends Animal {
-    public void move() {
-        this.setHunger(5);
-    }
 
     @Override
     protected boolean condition(Board board, int x, int y) {
@@ -20,11 +16,6 @@ public class Carnivorous extends Animal {
         int carnivorousFightNumber = randCarnivorous * this.getStrength() / this.getStrength();
         int herbivorousFightNumber = randHerbivorous * animal.getStrength() / animal.getStrength();
         return carnivorousFightNumber > herbivorousFightNumber;
-    }
-
-    public Case nearestPrey() {
-        Case superCase = new Case();
-        return (superCase);
     }
 
 }

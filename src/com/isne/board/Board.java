@@ -249,7 +249,7 @@ public class Board {
             for(int y=0; y<LIMIT;y++){
                 if(this.getCaseAt(x,y).content != null && this.getCaseAt(x,y).content.getSpecies()== aSpecies && !this.getCaseAt(x,y).content.getHasAlreadyMoved()){
                     if(this.getCaseAt(x,y).content.move(this)){
-                        System.out.println("miam miam");
+
                     }
                 }
             }
@@ -353,19 +353,19 @@ public class Board {
             Collections.shuffle(turnOrderList);
             for (String breed : turnOrderList) {
                 if (Objects.equals(breed, "Lion")) {
-
+                    this.makeASpeciesMove("Lion");
                 }
 
-                if (Objects.equals(breed, "Lion")) {
-
+                if (Objects.equals(breed, "Hippopotamus")) {
+                    this.makeASpeciesMove("Hippopotamus");
                 }
 
-                if (Objects.equals(breed, "Lion")) {
-
+                if (Objects.equals(breed, "Giraffe")) {
+                    this.makeASpeciesMove("Giraffe");
                 }
 
-                if (Objects.equals(breed, "Lion")) {
-
+                if (Objects.equals(breed, "Crocodile")) {
+                    this.makeASpeciesMove("Crocodile");
                 }
                 // Display
                 clearConsole();

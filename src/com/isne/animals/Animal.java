@@ -24,6 +24,7 @@ public abstract class Animal {
 
     /**
      * This method manage all the mouvement part of an animal
+     *
      * @param board
      * @return true if it is next to its food location, false otherwise
      */
@@ -40,19 +41,19 @@ public abstract class Animal {
             positionY = this.getPositionY();
             directionX = this.findDirection(destinationX, positionX);
             directionY = this.findDirection(destinationY, positionY);
-            if(distance(positionX,positionY,destinationX,destinationY)==1){
+            if (distance(positionX, positionY, destinationX, destinationY) == 1) {
                 return true; //if the animal is next to its food location, no need to move anymore.
             }
-            if (!this.moveFromOneTile(board, directionX,true)) { // If wadStuckOnY is true then it has to move on Y axis first.
+            if (!this.moveFromOneTile(board, directionX, true)) { // If wadStuckOnY is true then it has to move on Y axis first.
                 this.setWasStuckOnY(false); // the animal will move on Y first we can re-initialize the variable.
                 if (!this.moveFromOneTile(board, directionY, false)) { //if the animal didn't move in x or in y then he is stuck, the functions bellow are here to make it move
                     if (destinationX - positionX != 0) { // if the animal isn't near the food on the x axis, then it is stuck by an object near from him on the x-axis we need to make a move on the y-axis first.
-                        if (!this.moveFromOneTileWhenStuck(board, 1,true)) {
+                        if (!this.moveFromOneTileWhenStuck(board, 1, true)) {
                             this.moveFromOneTileWhenStuck(board, -1, true);
                         }
                     } else { // it is stuck on the y axis, need to move on the y one.
                         if (destinationY - positionY != 0) {
-                            if (!this.moveFromOneTileWhenStuck(board,1,false)) {
+                            if (!this.moveFromOneTileWhenStuck(board, 1, false)) {
                                 this.moveFromOneTileWhenStuck(board, -1, false);
                             }
                         }
@@ -66,6 +67,7 @@ public abstract class Animal {
 
     /**
      * The animal can be stuck by a tree or a bush or another animal on its path. This method is here to unlock it
+     *
      * @param board
      * @param direction
      * @param stuckOnX
@@ -76,21 +78,20 @@ public abstract class Animal {
         int positionY = this.positionY;
         Case wantedCase;
         Case currentCase = board.getCaseAt(positionX, positionY);
-        if(stuckOnX) {
+        if (stuckOnX) {
             if (positionY + direction == LIMIT || positionY + direction < 0) { // checks if the wanted case is not outside the board.
                 return false;
             }
-            wantedCase = board.getCaseAt(positionX , positionY+ direction); //sets the case id to unclock the animal.
-        }
-        else{
+            wantedCase = board.getCaseAt(positionX, positionY + direction); //sets the case id to unclock the animal.
+        } else {
             if (positionX + direction == LIMIT || positionX + direction < 0) {
                 return false;
             }
-            wantedCase = board.getCaseAt(positionX+ direction , positionY);
+            wantedCase = board.getCaseAt(positionX + direction, positionY);
             this.setWasStuckOnY(true);
         }
-        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone" || (wantedCase.getType() == "Water" && this.canSwim)) && wantedCase.content == null) { // si le deplacement sur la wanted case est possible
-            this.makeTheMove(wantedCase,currentCase);
+        if ((wantedCase.getType() == "Ground" || wantedCase.getType() == "SafeZone" || (wantedCase.getType() == "Water" && this.canSwim)) && wantedCase.content == null) { // si le deplacement sur la wanted case est possible
+            this.makeTheMove(wantedCase, currentCase);
             return true;
         }
         return false;
@@ -98,32 +99,29 @@ public abstract class Animal {
 
 
     /**
-     *
-     *
      * @param board
      * @param direction 1 if you want to go up or right, -1 to go down or left
-     * @param moveOnX if it is true the move will be on X axis otherwise on Y axis
+     * @param moveOnX   if it is true the move will be on X axis otherwise on Y axis
      * @return true if the animal as been able to move, false otherwise. The direction parameter is either 1 or -1 or 0. It says if the animal must go to the right, left, up down of its actual position.
      */
-    public boolean moveFromOneTile(Board board, int direction,boolean moveOnX) {
-        if(direction==0){
+    public boolean moveFromOneTile(Board board, int direction, boolean moveOnX) {
+        if (direction == 0) {
             return false;
         }
         int positionX = this.getPositionX();
         int positionY = this.getPositionY();
         Case currentCase = board.getCaseAt(positionX, positionY);
         Case wantedCase;
-        if(moveOnX){
-            wantedCase = board.getCaseAt(positionX+direction, positionY);
-            if(this.getWasStuckOnY()){
+        if (moveOnX) {
+            wantedCase = board.getCaseAt(positionX + direction, positionY);
+            if (this.getWasStuckOnY()) {
                 return false; // the animal needs to move on y-axis first
             }
-        }
-        else{
+        } else {
             wantedCase = board.getCaseAt(positionX, positionY + direction);
         }
-        if ((wantedCase.getType() == "Ground"|| wantedCase.getType() == "SafeZone" || (wantedCase.getType() == "Water" && this.canSwim)) && wantedCase.content == null) {
-            this.makeTheMove(wantedCase,currentCase);
+        if ((wantedCase.getType() == "Ground" || wantedCase.getType() == "SafeZone" || (wantedCase.getType() == "Water" && this.canSwim)) && wantedCase.content == null) {
+            this.makeTheMove(wantedCase, currentCase);
             return true;
         }
         return false;
@@ -131,10 +129,11 @@ public abstract class Animal {
 
     /**
      * Method which actually make the animal move from one tile to antoher
+     *
      * @param wantedCase
      * @param currentCase
      */
-    public void makeTheMove(Case wantedCase, Case currentCase){
+    public void makeTheMove(Case wantedCase, Case currentCase) {
         wantedCase.content = this;
         this.setPositionX(wantedCase.getPosX());
         this.setPositionY(wantedCase.getPosY());
@@ -142,7 +141,6 @@ public abstract class Animal {
     }
 
     /**
-     *
      * @param destination
      * @param position
      * @return -1 if the indice of the direction is lower than the position of the animal, +1 if it is higher, 0 if it is the same
@@ -152,7 +150,6 @@ public abstract class Animal {
     }
 
     /**
-     *
      * @param abscissa1
      * @param ordinate1
      * @param abscissa2
@@ -171,7 +168,7 @@ public abstract class Animal {
     public int[] findClosestFood(Board board) {
         int maPositionX = this.getPositionX();
         int maPositionY = this.getPositionY();
-        double distanceMin = LIMIT*2;
+        double distanceMin = LIMIT * 2;
         int closestX = LIMIT;
         int closestY = LIMIT;
         for (int x = 0; x < LIMIT; x++) {
@@ -185,7 +182,7 @@ public abstract class Animal {
                 }
             }
         }
-        int[] arr={closestX,closestY};
+        int[] arr = {closestX, closestY};
         return arr;
     }
 
@@ -193,7 +190,9 @@ public abstract class Animal {
 
     /* Getters and setters   */
 
-    public String getSymbol() {return Symbol;}
+    public String getSymbol() {
+        return Symbol;
+    }
 
     public void setSymbol(String symbol) {
         Symbol = symbol;
