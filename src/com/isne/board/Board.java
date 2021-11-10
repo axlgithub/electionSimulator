@@ -18,9 +18,9 @@ import static com.isne.Main.*;
  */
 public class Board {
     public static final String ANSI_RESET = "\u001B[0m";
-    public final Case[][] grid;
     public static volatile int bushNumber = 0;
     public static volatile int treeNumber = 0;
+    public final Case[][] grid;
 
     /**
      * Constructor for Board initialization
@@ -51,6 +51,7 @@ public class Board {
 
     /**
      * Generate number of wanted trees on a random spot
+     *
      * @param ntrees
      */
     private void generateTrees(int ntrees) {
@@ -72,6 +73,7 @@ public class Board {
 
     /**
      * Generate number of wanted bushes on a random spot
+     *
      * @param nbushes
      */
     private void generateBushes(int nbushes) {
@@ -243,18 +245,18 @@ public class Board {
         }
     }
 
-    public void makeASpeciesMove(String aSpecies){
-        for(int x1=0; x1<LIMIT;x1++) { // first loop to say that no animal of this species has moved
+    public void makeASpeciesMove(String aSpecies) {
+        for (int x1 = 0; x1 < LIMIT; x1++) { // first loop to say that no animal of this species has moved
             for (int y2 = 0; y2 < LIMIT; y2++) {
                 if (this.getCaseAt(x1, y2).content != null && this.getCaseAt(x1, y2).content.getSpecies() == aSpecies) {
                     this.getCaseAt(x1, y2).content.setHasAlreadyMoved(false);
                 }
             }
         }
-        for(int x=0; x<LIMIT;x++){ // loop to make the animal of the species move.
-            for(int y=0; y<LIMIT;y++){
-                if(this.getCaseAt(x,y).content != null && this.getCaseAt(x,y).content.getSpecies()== aSpecies && !this.getCaseAt(x,y).content.getHasAlreadyMoved()){
-                    this.getCaseAt(x,y).content.move(this);
+        for (int x = 0; x < LIMIT; x++) { // loop to make the animal of the species move.
+            for (int y = 0; y < LIMIT; y++) {
+                if (this.getCaseAt(x, y).content != null && this.getCaseAt(x, y).content.getSpecies() == aSpecies && !this.getCaseAt(x, y).content.getHasAlreadyMoved()) {
+                    this.getCaseAt(x, y).content.move(this);
                 }
             }
         }
@@ -330,7 +332,7 @@ public class Board {
                     this.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content = newHippopotamus;
                     newHippopotamus.setPositionX(LIMIT - 1 - x);
                     newHippopotamus.setPositionY(LIMIT - 1 - y);
-                    this.getCaseAt(LIMIT - 1 - x,  y).content = newCrocodile;
+                    this.getCaseAt(LIMIT - 1 - x, y).content = newCrocodile;
                     newCrocodile.setPositionX(LIMIT - 1 - x);
                     newCrocodile.setPositionY(y);
                     numberOfAnimalsAlreadyCreated += 1;
@@ -384,12 +386,12 @@ public class Board {
             // End of turn
             this.manageHunger();
             // generate plants if eaten
-            if (bushNumber <= NBUSHES){
-                generateBushes(NBUSHES-bushNumber);
+            if (bushNumber <= NBUSHES) {
+                generateBushes(NBUSHES - bushNumber);
             }
 
-            if (treeNumber <= NTREES){
-                generateTrees(NTREES-treeNumber);
+            if (treeNumber <= NTREES) {
+                generateTrees(NTREES - treeNumber);
             }
             clearConsole();
             this.show();

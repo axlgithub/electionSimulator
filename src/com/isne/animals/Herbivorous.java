@@ -1,7 +1,6 @@
 package com.isne.animals;
 
 import com.isne.board.Board;
-import com.isne.board.Plant;
 
 public class Herbivorous extends Animal {
 

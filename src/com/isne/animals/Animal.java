@@ -47,10 +47,10 @@ public abstract class Animal {
 
                 // If carnivorous near herbirovous
                 Animal prey = board.getCaseAt(destinationX, destinationY).content;
-                if (prey != null){
+                if (prey != null) {
                     boolean status = this.eat(prey);
                     // if successful, kill herbivorous
-                    if (status){
+                    if (status) {
                         board.getCaseAt(destinationX, destinationY).content = null;
                     }
                 }
@@ -58,7 +58,7 @@ public abstract class Animal {
                 else {
                     int isBush = board.grid[LIMIT - 1 - destinationY][destinationX].getType() == "Bush" ? Board.bushNumber-- : Board.treeNumber--;
                     // note that positions attributes are inversed from grid
-                    board.grid[LIMIT-1-destinationY][destinationX] = new Ground();
+                    board.grid[LIMIT - 1 - destinationY][destinationX] = new Ground();
                     this.hunger = 10; // TODO
                 }
                 return true; //if the animal is next to its food location, no need to move anymore.
@@ -86,6 +86,7 @@ public abstract class Animal {
 
     /**
      * Eat (only for carinorous)
+     *
      * @return
      */
     protected boolean eat(Animal animal) {
