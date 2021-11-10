@@ -10,6 +10,9 @@ public class Lion extends Carnivorous {
         this.setSymbol(Symbol);
         this.setSpeedOnGround(5);
         this.setWasStuckOnY(false);
+        this.setHunger(20);
+        this.setLife(50);
+        this.setStrength(10);
     }
 
     public boolean condition(Board board, int x, int y) {

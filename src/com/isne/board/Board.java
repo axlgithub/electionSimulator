@@ -19,6 +19,8 @@ import static com.isne.Main.*;
 public class Board {
     public static final String ANSI_RESET = "\u001B[0m";
     public final Case[][] grid;
+    public static volatile int bushNumber = 0;
+    public static volatile int treeNumber = 0;
 
     /**
      * Constructor for Board initialization
@@ -34,7 +36,8 @@ public class Board {
         placeSafeZones();
         placeWater();
         placeMasters();
-        placePlants();
+        generateBushes(NBUSHES);
+        generateTrees(NTREES);
 
     }
 
@@ -47,42 +50,45 @@ public class Board {
     }
 
     /**
-     * Place 5 animals of each, 9 bushs & 6 trees, only used in constructor
+     * Generate number of wanted trees on a random spot
+     * @param ntrees
      */
-    private void placePlants() {
-        int bushCount = 0;
+    private void generateTrees(int ntrees) {
         int treeCount = 0;
-
-        // Bush
-        while (bushCount <= 9) {
-            int x = new Random().nextInt(30);
-            int y = new Random().nextInt(30);
-
-            // not busy and not water and not safezone
-            if (!this.getCaseAt(x, y).isBusy() && this.getCaseAt(x, y).getType() != "Water" && this.getCaseAt(x, y).getType() != "SafeZone") {
-                this.grid[LIMIT - 1 - x][y] = new Bush();
-                bushCount++;
-            }
-        }
-
-        // tree
-        while (treeCount <= 6) {
+        while (treeCount <= NTREES) {
             int x = new Random().nextInt(30);
             int y = new Random().nextInt(30);
 
             // not busy and not water and not safezone
             if (!this.getCaseAt(x, y).isBusy() && this.getCaseAt(x, y).getType() != "Water" && this.getCaseAt(x, y).getType() != "SafeZone") {
                 this.grid[LIMIT - 1 - x][y] = new Tree();
+                this.grid[LIMIT - 1 - x][y].setPosX(x);
+                this.grid[LIMIT - 1 - x][y].setPosY(y);
+                treeNumber++; // increment number of present trees on board
                 treeCount++;
             }
         }
+    }
 
-        // Lion
-        // Crocodile
-        // Giraffe
-        // Hippopotamus
+    /**
+     * Generate number of wanted bushes on a random spot
+     * @param nbushes
+     */
+    private void generateBushes(int nbushes) {
+        int bushCount = 0;
+        while (bushCount <= nbushes) {
+            int x = new Random().nextInt(30);
+            int y = new Random().nextInt(30);
 
-
+            // not busy and not water and not safezone
+            if (!this.getCaseAt(x, y).isBusy() && this.getCaseAt(x, y).getType() != "Water" && this.getCaseAt(x, y).getType() != "SafeZone") {
+                this.grid[LIMIT - 1 - x][y] = new Bush();
+                this.grid[LIMIT - 1 - x][y].setPosX(x);
+                this.grid[LIMIT - 1 - x][y].setPosY(y);
+                bushNumber++; // increment number of present bushes on board
+                bushCount++;
+            }
+        }
     }
 
     /**
@@ -248,9 +254,7 @@ public class Board {
         for(int x=0; x<LIMIT;x++){ // loop to make the animal of the species move.
             for(int y=0; y<LIMIT;y++){
                 if(this.getCaseAt(x,y).content != null && this.getCaseAt(x,y).content.getSpecies()== aSpecies && !this.getCaseAt(x,y).content.getHasAlreadyMoved()){
-                    if(this.getCaseAt(x,y).content.move(this)){
-
-                    }
+                    this.getCaseAt(x,y).content.move(this);
                 }
             }
         }
@@ -380,6 +384,13 @@ public class Board {
             // End of turn
             this.manageHunger();
             // generate plants if eaten
+            if (bushNumber <= NBUSHES){
+                generateBushes(NBUSHES-bushNumber);
+            }
+
+            if (treeNumber <= NTREES){
+                generateTrees(NTREES-treeNumber);
+            }
             clearConsole();
             this.show();
             try {

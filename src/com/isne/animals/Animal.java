@@ -2,6 +2,7 @@ package com.isne.animals;
 
 import com.isne.board.Board;
 import com.isne.board.Case;
+import com.isne.board.Ground;
 
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public abstract class Animal {
 
     /**
      * This method manage all the mouvement part of an animal
+     * Also handle eat
      *
      * @param board
      * @return true if it is next to its food location, false otherwise
@@ -42,6 +44,23 @@ public abstract class Animal {
             directionX = this.findDirection(destinationX, positionX);
             directionY = this.findDirection(destinationY, positionY);
             if (distance(positionX, positionY, destinationX, destinationY) == 1) {
+
+                // If carnivorous near herbirovous
+                Animal prey = board.getCaseAt(destinationX, destinationY).content;
+                if (prey != null){
+                    boolean status = this.eat(prey);
+                    // if successful, kill herbivorous
+                    if (status){
+                        board.getCaseAt(destinationX, destinationY).content = null;
+                    }
+                }
+                // else herbivorous near plant
+                else {
+                    int isBush = board.grid[LIMIT - 1 - destinationY][destinationX].getType() == "Bush" ? Board.bushNumber-- : Board.treeNumber--;
+                    // note that positions attributes are inversed from grid
+                    board.grid[LIMIT-1-destinationY][destinationX] = new Ground();
+                    this.hunger = 10; // TODO
+                }
                 return true; //if the animal is next to its food location, no need to move anymore.
             }
             if (!this.moveFromOneTile(board, directionX, true)) { // If wadStuckOnY is true then it has to move on Y axis first.
@@ -62,6 +81,14 @@ public abstract class Animal {
             }
         }
         this.setHasAlreadyMoved(true);
+        return false;
+    }
+
+    /**
+     * Eat (only for carinorous)
+     * @return
+     */
+    protected boolean eat(Animal animal) {
         return false;
     }
 

@@ -6,7 +6,7 @@ public class Plant extends Case {
 
     public Plant() {
         super();
-        this.setType("Ground");
+        //this.setType("Ground");
         this.backgroundColor = getBackground();
         this.setSymbol(getSymbol());
     }

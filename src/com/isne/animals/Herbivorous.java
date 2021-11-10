@@ -10,8 +10,5 @@ public class Herbivorous extends Animal {
         return true;
     }
 
-    public void eat(Plant plant) {
-        System.out.println("super ! ");
-    }
 
 }

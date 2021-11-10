@@ -9,8 +9,8 @@ public class Carnivorous extends Animal {
         return false;
     }
 
-    // attack an animal
-    public boolean fight(Animal animal) {
+    @Override
+    protected boolean eat(Animal animal) {
         int randCarnivorous = (int) Math.floor(Math.random() * (10 + 1));
         int randHerbivorous = (int) Math.floor(Math.random() * (8 + 1));
         int carnivorousFightNumber = randCarnivorous * this.getStrength() / this.getStrength();

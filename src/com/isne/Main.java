@@ -8,7 +8,8 @@ public class Main {
     public static final int SAFEZONESIZE = 3;
     public static final int ANIMALS = 5;
     public static final int SPEED = 200; // ms
-
+    public static final int NBUSHES = 9;
+    public static final int NTREES = 6;
 
     public static void main(String[] args) throws InterruptedException {
         // Game generation
