@@ -4,13 +4,14 @@ import com.isne.board.Board;
 
 public class Hippopotamus extends Herbivorous {
     public final String Symbol = " h ";
+    public static int hippopotamusHunger = 10;
 
     public Hippopotamus() {
         this.setSpecies("Hippopotamus");
         this.setSymbol(Symbol);
         this.setSpeedOnGround(2);
         this.setWasStuckOnY(false);
-        this.setHunger(10);
+        this.setHunger(hippopotamusHunger);
         this.setLife(30);
         this.setStrength(8);
     }

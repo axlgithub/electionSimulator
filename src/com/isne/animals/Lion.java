@@ -4,13 +4,14 @@ import com.isne.board.Board;
 
 public class Lion extends Carnivorous {
     public final String Symbol = " l ";
+    public static int lionHunger = 20;
 
     public Lion() {
         this.setSpecies("Lion");
         this.setSymbol(Symbol);
         this.setSpeedOnGround(5);
         this.setWasStuckOnY(false);
-        this.setHunger(20);
+        this.setHunger(lionHunger);
         this.setLife(50);
         this.setStrength(10);
     }

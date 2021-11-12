@@ -7,6 +7,10 @@ import com.isne.board.Ground;
 import java.util.UUID;
 
 import static com.isne.Main.LIMIT;
+import static com.isne.animals.Crocodile.crocodileHunger;
+import static com.isne.animals.Giraffe.giraffeHunger;
+import static com.isne.animals.Hippopotamus.hippopotamusHunger;
+import static com.isne.animals.Lion.lionHunger;
 
 public abstract class Animal {
     private int life;
@@ -49,7 +53,7 @@ public abstract class Animal {
                 Animal prey = board.getCaseAt(destinationX, destinationY).content;
                 if (prey != null) {
                     boolean status = this.eat(prey);
-                    // if successful, kill herbivorous
+                    // if successful, kill herbivorous TODO carnivor go back to dest for generation
                     if (status) {
                         board.getCaseAt(destinationX, destinationY).content = null;
                     }
@@ -59,7 +63,18 @@ public abstract class Animal {
                     int isBush = board.grid[LIMIT - 1 - destinationY][destinationX].getType() == "Bush" ? Board.bushNumber-- : Board.treeNumber--;
                     // note that positions attributes are inversed from grid
                     board.grid[LIMIT - 1 - destinationY][destinationX] = new Ground();
-                    this.hunger = 10; // TODO
+                    if (this instanceof Giraffe){
+                        this.hunger = giraffeHunger;
+                    }
+                    if (this instanceof Hippopotamus){
+                        this.hunger = hippopotamusHunger;
+                    }
+                    if (this instanceof Crocodile){
+                        this.hunger = crocodileHunger;
+                    }
+                    if (this instanceof Lion){
+                        this.hunger = lionHunger;
+                    }
                 }
                 return true; //if the animal is next to its food location, no need to move anymore.
             }

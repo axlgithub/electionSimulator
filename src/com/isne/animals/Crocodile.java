@@ -4,9 +4,10 @@ import com.isne.board.Board;
 
 public class Crocodile extends Carnivorous {
     public final String Symbol = " c ";
+    public static int crocodileHunger = 15;
 
     public Crocodile() {
-        this.setHunger(20);
+        this.setHunger(crocodileHunger);
         this.setCanSwim(true);
         this.setLife(50);
         this.setStrength(10);
