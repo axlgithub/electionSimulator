@@ -53,9 +53,17 @@ public abstract class Animal {
                 Animal prey = board.getCaseAt(destinationX, destinationY).content;
                 if (prey != null) {
                     boolean status = this.eat(prey);
+
                     // if successful, kill herbivorous TODO carnivor go back to dest for generation
                     if (status) {
                         board.getCaseAt(destinationX, destinationY).content = null;
+                        // refill hunger
+                        if (this instanceof Crocodile){
+                            this.hunger = crocodileHunger;
+                        }
+                        if (this instanceof Lion){
+                            this.hunger = lionHunger;
+                        }
                     }
                 }
                 // else herbivorous near plant
@@ -70,12 +78,6 @@ public abstract class Animal {
                     }
                     if (this instanceof Hippopotamus){
                         this.hunger = hippopotamusHunger;
-                    }
-                    if (this instanceof Crocodile){
-                        this.hunger = crocodileHunger;
-                    }
-                    if (this instanceof Lion){
-                        this.hunger = lionHunger;
                     }
                 }
                 return true; //if the animal is next to its food location, no need to move anymore.
