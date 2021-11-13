@@ -63,6 +63,8 @@ public abstract class Animal {
                     int isBush = board.grid[LIMIT - 1 - destinationY][destinationX].getType() == "Bush" ? Board.bushNumber-- : Board.treeNumber--;
                     // note that positions attributes are inversed from grid
                     board.grid[LIMIT - 1 - destinationY][destinationX] = new Ground();
+                    board.grid[LIMIT - 1 - destinationY][destinationX].setPosX(destinationY);
+                    board.grid[LIMIT - 1 - destinationY][destinationX].setPosY(destinationX);
                     if (this instanceof Giraffe){
                         this.hunger = giraffeHunger;
                     }
@@ -178,8 +180,10 @@ public abstract class Animal {
      */
     public void makeTheMove(Case wantedCase, Case currentCase) {
         wantedCase.content = this;
+        currentCase.setBusy(false); // free actual case
         this.setPositionX(wantedCase.getPosX());
         this.setPositionY(wantedCase.getPosY());
+        wantedCase.setBusy(true); // lock wanted case
         currentCase.content = null;
     }
 
