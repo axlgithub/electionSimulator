@@ -7,6 +7,7 @@ import com.isne.board.Ground;
 import java.util.UUID;
 
 import static com.isne.Main.LIMIT;
+import static com.isne.Main.SAFEZONESIZE;
 import static com.isne.animals.Crocodile.crocodileHunger;
 import static com.isne.animals.Giraffe.giraffeHunger;
 import static com.isne.animals.Hippopotamus.hippopotamusHunger;
@@ -60,9 +61,11 @@ public abstract class Animal {
                         // refill hunger
                         if (this instanceof Crocodile){
                             this.hunger = crocodileHunger;
+                            spawnAnimal(board);
                         }
                         if (this instanceof Lion){
                             this.hunger = lionHunger;
+                            spawnAnimal(board);
                         }
                     }
                 }
@@ -75,9 +78,11 @@ public abstract class Animal {
                     board.grid[LIMIT - 1 - destinationY][destinationX].setPosY(destinationX);
                     if (this instanceof Giraffe){
                         this.hunger = giraffeHunger;
+                        spawnAnimal(board);
                     }
                     if (this instanceof Hippopotamus){
                         this.hunger = hippopotamusHunger;
+                        spawnAnimal(board);
                     }
                 }
                 return true; //if the animal is next to its food location, no need to move anymore.
@@ -102,6 +107,43 @@ public abstract class Animal {
         this.setHasAlreadyMoved(true);
         return false;
     }
+
+    /**
+     * Spawn one instance of needed animal
+     * @param board
+     */
+    public void spawnAnimal(Board board) {
+        for (int x = 0; x < SAFEZONESIZE; x++) {
+            for (int y = 0; y < SAFEZONESIZE; y++) {
+                if (!board.getCaseAt(x, y).isBusy()) {
+                    if (this instanceof Lion){
+                        board.getCaseAt(x, y).content = new Lion();
+                        board.getCaseAt(x, y).content.setPositionX(x);
+                        board.getCaseAt(x, y).content.setPositionX(y);
+                        return;
+                    }
+                    if (this instanceof Crocodile){
+                        board.getCaseAt(LIMIT - 1 - x, y).content = new Crocodile();
+                        board.getCaseAt(LIMIT - 1 - x, y).content.setPositionX(LIMIT - 1 - x);
+                        board.getCaseAt(LIMIT - 1 - x, y).content.setPositionX(y);
+                        return;
+                    }
+                    if (this instanceof Hippopotamus){
+                        board.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content = new Hippopotamus();
+                        board.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content.setPositionX(LIMIT - 1 - x);
+                        board.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content.setPositionX(LIMIT - 1 - y);
+                        return;
+                    }
+                    if (this instanceof Giraffe){
+                        board.getCaseAt(x, LIMIT - 1 - y).content = new Giraffe();
+                        board.getCaseAt(x, LIMIT - 1 - y).content.setPositionX(x);
+                        board.getCaseAt(x, LIMIT - 1 - y).content.setPositionX(LIMIT - 1 - y);
+                        return;
+                    }
+                }
+
+            }
+        }}
 
     /**
      * Eat (only for carinorous)
