@@ -168,12 +168,12 @@ public abstract class Animal {
         Case wantedCase;
         Case currentCase = board.getCaseAt(positionX, positionY);
         if (stuckOnX) {
-            if (positionY + direction == LIMIT || positionY + direction < 0) { // checks if the wanted case is not outside the board.
+            if (positionY + direction >= LIMIT || positionY + direction < 0) { // checks if the wanted case is not outside the board.
                 return false;
             }
             wantedCase = board.getCaseAt(positionX, positionY + direction); //sets the case id to unclock the animal.
         } else {
-            if (positionX + direction == LIMIT || positionX + direction < 0) {
+            if (positionX + direction >= LIMIT || positionX + direction < 0) {
                 return false;
             }
             wantedCase = board.getCaseAt(positionX + direction, positionY);
@@ -202,11 +202,18 @@ public abstract class Animal {
         Case currentCase = board.getCaseAt(positionX, positionY);
         Case wantedCase;
         if (moveOnX) {
+            if(positionX + direction>=LIMIT){
+                return false;
+            }
             wantedCase = board.getCaseAt(positionX + direction, positionY);
             if (this.getWasStuckOnY()) {
                 return false; // the animal needs to move on y-axis first
             }
-        } else {
+        }
+        else {
+            if(positionY + direction>=LIMIT){
+                return false;
+            }
             wantedCase = board.getCaseAt(positionX, positionY + direction);
         }
         if ((wantedCase.getType() == "Ground" || wantedCase.getType() == "SafeZone" || (wantedCase.getType() == "Water" && this.canSwim)) && wantedCase.content == null) {
