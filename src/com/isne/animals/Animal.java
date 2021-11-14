@@ -71,7 +71,12 @@ public abstract class Animal {
                 }
                 // else herbivorous near plant
                 else {
-                    int isBush = board.grid[LIMIT - 1 - destinationY][destinationX].getType() == "Bush" ? Board.bushNumber-- : Board.treeNumber--;
+                    if (board.grid[LIMIT - 1 - destinationY][destinationX].getType() == "Bush"){
+                        Board.bushNumber--;
+                    } else {
+
+                        Board.treeNumber--;
+                    }
                     // note that positions attributes are inversed from grid
                     board.grid[LIMIT - 1 - destinationY][destinationX] = new Ground();
                     board.grid[LIMIT - 1 - destinationY][destinationX].setPosX(destinationY);
