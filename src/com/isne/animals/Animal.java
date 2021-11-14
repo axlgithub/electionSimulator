@@ -124,25 +124,25 @@ public abstract class Animal {
                     if (this instanceof Lion){
                         board.getCaseAt(x, y).content = new Lion();
                         board.getCaseAt(x, y).content.setPositionX(x);
-                        board.getCaseAt(x, y).content.setPositionX(y);
+                        board.getCaseAt(x, y).content.setPositionY(y);
                         return;
                     }
                     if (this instanceof Crocodile){
                         board.getCaseAt(LIMIT - 1 - x, y).content = new Crocodile();
                         board.getCaseAt(LIMIT - 1 - x, y).content.setPositionX(LIMIT - 1 - x);
-                        board.getCaseAt(LIMIT - 1 - x, y).content.setPositionX(y);
+                        board.getCaseAt(LIMIT - 1 - x, y).content.setPositionY(y);
                         return;
                     }
                     if (this instanceof Hippopotamus){
                         board.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content = new Hippopotamus();
                         board.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content.setPositionX(LIMIT - 1 - x);
-                        board.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content.setPositionX(LIMIT - 1 - y);
+                        board.getCaseAt(LIMIT - 1 - x, LIMIT - 1 - y).content.setPositionY(LIMIT - 1 - y);
                         return;
                     }
                     if (this instanceof Giraffe){
                         board.getCaseAt(x, LIMIT - 1 - y).content = new Giraffe();
                         board.getCaseAt(x, LIMIT - 1 - y).content.setPositionX(x);
-                        board.getCaseAt(x, LIMIT - 1 - y).content.setPositionX(LIMIT - 1 - y);
+                        board.getCaseAt(x, LIMIT - 1 - y).content.setPositionY(LIMIT - 1 - y);
                         return;
                     }
                 }

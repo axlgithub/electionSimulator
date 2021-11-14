@@ -36,8 +36,8 @@ public class Board {
         placeSafeZones();
         placeWater();
         placeMasters();
-        generateBushes(NBUSHES);
-        generateTrees(NTREES);
+        generateBushes();
+        generateTrees();
 
     }
 
@@ -51,12 +51,9 @@ public class Board {
 
     /**
      * Generate number of wanted trees on a random spot
-     *
-     * @param ntrees
      */
-    private void generateTrees(int ntrees) {
-        int treeCount = 0;
-        while (treeCount <= NTREES) {
+    private void generateTrees() {
+        while (treeNumber <= NTREES) {
             int x = new Random().nextInt(30);
             int y = new Random().nextInt(30);
 
@@ -66,19 +63,15 @@ public class Board {
                 this.grid[LIMIT - 1 - x][y].setPosX(x);
                 this.grid[LIMIT - 1 - x][y].setPosY(y);
                 treeNumber++; // increment number of present trees on board
-                treeCount++;
             }
         }
     }
 
     /**
      * Generate number of wanted bushes on a random spot
-     *
-     * @param nbushes
      */
-    private void generateBushes(int nbushes) {
-        int bushCount = 0;
-        while (bushCount <= nbushes) {
+    private void generateBushes() {
+        while (bushNumber <= NBUSHES) {
             int x = new Random().nextInt(30);
             int y = new Random().nextInt(30);
 
@@ -88,7 +81,6 @@ public class Board {
                 this.grid[LIMIT - 1 - x][y].setPosX(x);
                 this.grid[LIMIT - 1 - x][y].setPosY(y);
                 bushNumber++; // increment number of present bushes on board
-                bushCount++;
             }
         }
     }
@@ -387,14 +379,15 @@ public class Board {
             this.manageHunger();
             // generate plants if eaten
             if (bushNumber <= NBUSHES) {
-                generateBushes(NBUSHES - bushNumber);
+                generateBushes();
             }
 
             if (treeNumber <= NTREES) {
-                generateTrees(NTREES - treeNumber);
+                generateTrees();
             }
             clearConsole();
             this.show();
+            System.out.println("END OF TURN");
             try {
                 Thread.sleep(SPEED);
             } catch (InterruptedException e) {
